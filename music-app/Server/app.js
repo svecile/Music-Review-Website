@@ -24,6 +24,7 @@ console.log('connected to the database (mongoose)');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 
 var jwtCheck = jwt({
