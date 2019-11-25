@@ -9,10 +9,10 @@ export class AuthService {
   // Create Auth0 web auth instance
   private auth0 = new auth0.WebAuth({
     clientID: 'PSy2wAsxOU5cHAIAbVNTSsMCTFRSI84a',
-    domain: 'dev-ayxvjao9',
+    domain: 'dev-ayxvjao9.auth0.com',
     responseType: 'token',
-    redirectUri: 'http://localhost:8083/callback',
-    audience: 'http://localhost:8083/api/',
+    redirectUri: 'http://'+window.location.host+'/callback',
+    audience: 'http://'+window.location.host+'/api/',
     scope: 'openid profile'
   });
   
@@ -89,7 +89,7 @@ export class AuthService {
     // End Auth0 authentication session
     this.auth0.logout({
       clientId: 'PSy2wAsxOU5cHAIAbVNTSsMCTFRSI84a',
-      returnTo: 'http://localhost:8083'
+      returnTo: 'http://'+window.location.host
     });
   }
 

@@ -1,11 +1,17 @@
 const Product = require('../models/product.model');
+const Song = require('../models/song.model');
+const User = require('../models/user.model');
+const Review = require('../models/review.model')
 
-//returns array of all products
-exports.all_product_details = function(req, res){
-    Product.find({}, 'name type loanPeroid quantity', function(err, products){
+//returns array of 10 songs ordered by average rating
+exports.home_songs = function(req, res){
+    Song.find({}, ['title', 'artist', 'album', 'averageRating'], 
+        {sort:{averageRating: -1}, limit: 10}, function(err, products){
+
         if(err) return console.error(err);
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.json(products);
+        else{
+            res.json(products);
+        }   
     }); 
 };
 
@@ -18,23 +24,27 @@ exports.product_details = function(req, res){
 };
 
 //create new product using data coming from a POST request
-exports.product_create = function (req, res) {
-    let product = new Product(
+exports.song_create = function (req, res) {
+    let song = new Song(
         {
-            name: req.body.name, //read name property from the body of the request
-            type: req.body.type,
-            loanPeroid: req.body.loanPeroid,
-            quantity: 0,
+            title: req.body.title,
+            artist: req.body.artist,
+            album: req.body.album,
+            year: req.body.year,
+            comment: req.body.comment,
+            zeroByte: 0,
+            track: req.body.track,
+            genre: req.body.genre,
+            submittedBy: req.body.submittedBy
         }
     );
 
     //save data to database
-    product.save(function (err) {
+    song.save(function (err) {
         if (err) {
             return console.error(err);
         }
-        console.log('Product Created Sucessfully');
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        console.log('Song Created Sucessfully');
     });
 };
 

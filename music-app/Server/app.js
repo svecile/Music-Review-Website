@@ -5,9 +5,7 @@ const bodyParser = require('body-parser');
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 
-const admin = require('./routes/admin.route'); //import routes
-const user = require('./routes/user.route');
-const open = require('./routes/open.route');
+const router = require('./routes/route'); //import routes
 
 const mongoose = require('mongoose');
 const cors=require('cors');
@@ -24,7 +22,7 @@ console.log('connected to the database (mongoose)');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(methodOverride('X-HTTP-Method-Override'));
+//app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 
 var jwtCheck = jwt({
@@ -39,15 +37,11 @@ var jwtCheck = jwt({
   algorithms: ['RS256']
 });
 
-app.use(jwtCheck);
+/*app.use(jwtCheck);
 app.get('/authorized', function (req, res) {
     res.send('Secured Resource');
-});
-
-app.use('/open', open);
-app.use('/admin', admin);
-app.use('/user', user);
-
+});*/
+app.use('/api', router);
 
 
 const port = 8083; //get port from enviroment or use 8080

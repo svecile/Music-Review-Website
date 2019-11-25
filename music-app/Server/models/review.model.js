@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 //structure for each db record
 let ReviewSchema = new Schema({
     song: {type: String, required: true, max: 30},
-    rating: {type: number, required: true, max: 5},
+    rating: {type: Number, required: true, max: 5},
     submittedBy: {type: String, required: true, max: 100},
     submittedOn: {type: Date, required: true},
 }, {collection:'review'}
