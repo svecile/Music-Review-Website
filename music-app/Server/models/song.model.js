@@ -11,7 +11,7 @@ let SongSchema = new Schema({
     comment: {type: String, required: false, max: 30},
     zeroByte: {type: Number, required: false, max: 1},
     track: {type: Number, required: false},
-    genre: {type: Number, required: false},
+    genre: {type: String, required: false, max:30},
     submittedBy: {type: String, required: false, max: 100},
     submittedOn: {type: Date, default:Date.now},
     numratings: {type: Number, required: false},
@@ -19,6 +19,8 @@ let SongSchema = new Schema({
     hidden: {type: Boolean, Default: false, required: false}
 }, {collection:'song'}
 );
+
+SongSchema.index({'$**': 'text'});
 
 // Sets the submitted on parameter equal to the current time
 SongSchema.pre('save', function(next){
@@ -29,6 +31,8 @@ SongSchema.pre('save', function(next){
     }
     next();
 });
+
+
 
 // create and export a js object with schema snd database instance
 module.exports = mongoose.model('Song', SongSchema);
