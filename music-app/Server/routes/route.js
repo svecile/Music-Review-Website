@@ -6,7 +6,7 @@ const music_controller = require('../controllers/music.controller');
 router.get('/songs', music_controller.home_songs); //return a list of 10 songs ordered by average rating. Optionally, you may pass a query parameter to indicate the number of results to return
 router.get('/search/:keyword', music_controller.search_songs); //return a list of songs matching the search criteria provided as query parameters
 router.get('/songReviewInfo/:songName', music_controller.song_review_details)//
-router.get('/reviews/:id'); //return all reviews for a given song ID
+router.get('/reviews/:songName', music_controller.all_song_reviews); //return all reviews for a given song ID
 
 //secure
 router.put('/secure/newSong', music_controller.song_create); //save the JSON array for a song in the database

@@ -28,6 +28,14 @@ exports.search_songs = function (req, res) {
         });
 };
 
+//get all reviews for a song
+exports.all_song_reviews = function (req, res) {
+    Review.find({ song: req.params.songName }, function (err, reviews) { //get all reviews for a song
+        if (err) return console.error(err);
+
+        res.send(JSON.stringify(reviews));
+    });
+};
 //get the average, most recent and total reviews for a song
 exports.song_review_details = function (req, res) {
     Review.find({ song: req.params.songName }, null, {sort: { 'submittedOn': -1 }}, function (err, reviews) { //get all reviews for a song
