@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 let UserSchema = new Schema({
     email: {type: String, required: true, max: 100},
     password: {type: String, required: true},
-    deactivated: {type: Date, Default: false},
+    deactivated: {type: Boolean, Default: false},
+    admin:{type: Boolean, default: false}
 }, {collection:'user', versionKey: false}
 );
 

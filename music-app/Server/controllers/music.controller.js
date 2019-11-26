@@ -115,7 +115,6 @@ exports.update_song = function (req, res) {
     }
     Song.update({"title": req.body.title}, { $set: updates }, function (err) {
         if (err) throw (err);
-        console.log("update sucessful")
-    
+        console.log("update sucessful");
     });
 };

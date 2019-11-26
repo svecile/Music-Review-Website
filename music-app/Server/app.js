@@ -6,7 +6,6 @@ var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 
 const router = require('./routes/route'); //import routes
-const authRouter = require('./')
 const mongoose = require('mongoose');
 const cors=require('cors');
 
@@ -43,11 +42,11 @@ app.get('/authorized', function (req, res) {
 });*/
 app.use('/api', router);
 
-
+const authRouter = require('./routes/auth.route');
 const authRoute = express.Router();
 authRoute.use(express.json());
 
-app.use('/auth', authRoute)
+app.use('/auth', authRouter);
 
 const port = 8083; //get port from enviroment or use 8080
 
