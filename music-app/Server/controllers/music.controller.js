@@ -30,29 +30,22 @@ exports.search_songs = function (req, res) {
 
 //get the average, most recent and total reviews for a song
 exports.song_review_details = function (req, res) {
-    review.find({ song: req.params.songName }, function (err, reviews) { //get all reviews for a song
+    Review.find({ song: req.params.songName }, null, {sort: { 'submittedOn': -1 }}, function (err, reviews) { //get all reviews for a song
         if (err) return console.error(err);
 
-        var count = reviews.length(); //how many reviews there are
-        console.log(count);
+        var jsonStr = JSON.stringify(reviews);
+        var jsonArr= JSON.parse(jsonStr);
+        var count = Object.keys(jsonArr).length; //how many reviews there are
+        
         var sum = 0;
-        reviews.forEach(function (obj) {
-            sum += parseFloat(obj[1]);
-            i++;
+        jsonArr.forEach(function (obj) {
+            sum += parseFloat(obj.rating);
         })
+        
         var aveRating = sum / count;//average review
-        console.log(aveRating);
-        var recentReview;
-        review.findOne({ song: req.params.name }, { //find most recent review for a song
-            sort: { 'submittedOn': -1 }, function(err, review) {
-                if (err) return console.error(err);
 
-                recentReview=review;
-            }
-           
-        })
         var json =[];
-        json.push(recentReview);
+        json.push(jsonArr[0]);
         json.push({"numReviews":count, "aveRating":aveRating});
         res.send(json);
     });
