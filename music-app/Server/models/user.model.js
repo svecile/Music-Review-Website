@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 //structure for each db record
 let UserSchema = new Schema({
     email: {type: String, required: true, max: 100},
-    password: {type: String, required: true, max: 200},
-    deactivated: {type: Date, Default: false, required: true},
+    password: {type: String, required: true},
+    deactivated: {type: Date, Default: false},
 }, {collection:'user', versionKey: false}
 );
 

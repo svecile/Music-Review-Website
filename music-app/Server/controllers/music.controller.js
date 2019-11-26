@@ -1,6 +1,4 @@
-const Product = require('../models/product.model');
 const Song = require('../models/song.model');
-const User = require('../models/user.model');
 const Review = require('../models/review.model')
 
 //returns array of 10 songs ordered by average rating
@@ -119,45 +117,5 @@ exports.update_song = function (req, res) {
         if (err) throw (err);
         console.log("update sucessful")
     
-    });
-};
-
-//desplay details of a product ?name=harry+potter
-exports.song_details = function (req, res) {
-    Product.findOne({ name: req.params.name }, function (err, product) {
-        if (err) return console.error(err);
-        res.send(JSON.stringify(product));
-    });
-};
-
-//update product quantity or loan peroid
-exports.product_updateLP_post = function (req, res) {
-    Product.findOneAndUpdate({ name: req.body.name }, { loanPeroid: req.body.loanPeroid },
-        function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            console.log('Product updated');
-        });
-};
-
-//update product quantity or loan peroid
-exports.product_updateQ_post = function (req, res) {
-    Product.findOneAndUpdate({ name: req.body.name }, { quantity: req.body.quantity },
-        function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            console.log('Product updated');
-        });
-};
-
-//delete product on post
-exports.product_delete_post = function (req, res) {
-    Product.findOneAndRemove({ name: req.body.name }, function (err) {
-        if (err) {
-            return console.error(err);
-        }
-        console.log('deleted sucessfully');
     });
 };
