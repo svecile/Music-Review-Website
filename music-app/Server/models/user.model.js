@@ -6,7 +6,7 @@ let UserSchema = new Schema({
     email: {type: String, required: true, max: 100},
     password: {type: String, required: true, max: 200},
     deactivated: {type: Date, Default: false, required: true},
-}, {collection:'user'}
+}, {collection:'user', versionKey: false}
 );
 
 // create and export a js object with schema snd database instance

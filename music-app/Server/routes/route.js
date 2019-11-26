@@ -10,7 +10,7 @@ router.get('/reviews/:songName', music_controller.all_song_reviews); //return al
 
 //secure
 router.put('/secure/newSong', music_controller.song_create); //save the JSON array for a song in the database
-router.post('/song/:id'); //update the record of the given song ID with JSON array of properties sent in the body
+router.post('/secure/updateSong', music_controller.update_song); //update the record of the given song ID with JSON array of properties sent in the body
 router.put('/secure/addReview', music_controller.review_create); //Create a new review for the song with the given ID based on JSON array provided in the body
 
 //admin

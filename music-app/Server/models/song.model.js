@@ -17,7 +17,7 @@ let SongSchema = new Schema({
     numratings: {type: Number, required: false},
     averageRating: {type: Number, required: false, max: 5},
     hidden: {type: Boolean, Default: false, required: false}
-}, {collection:'song'}
+}, {collection:'song', versionKey: false}
 );
 
 SongSchema.index({'$**': 'text'});

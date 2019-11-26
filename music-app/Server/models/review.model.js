@@ -8,7 +8,7 @@ let ReviewSchema = new Schema({
     review: {type: String, required: false},
     submittedBy: {type: String, required: true, max: 100},
     submittedOn: {type: Date, default:Date.now},
-}, {collection:'review'}
+}, {collection:'review', versionKey: false}
 );
 
 // Sets the submitted on parameter equal to the current time

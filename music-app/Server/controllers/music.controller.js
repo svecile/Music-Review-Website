@@ -36,34 +36,27 @@ exports.all_song_reviews = function (req, res) {
         res.send(JSON.stringify(reviews));
     });
 };
+
 //get the average, most recent and total reviews for a song
 exports.song_review_details = function (req, res) {
-    Review.find({ song: req.params.songName }, null, {sort: { 'submittedOn': -1 }}, function (err, reviews) { //get all reviews for a song
+    Review.find({ song: req.params.songName }, null, { sort: { 'submittedOn': -1 } }, function (err, reviews) { //get all reviews for a song
         if (err) return console.error(err);
 
         var jsonStr = JSON.stringify(reviews);
-        var jsonArr= JSON.parse(jsonStr);
+        var jsonArr = JSON.parse(jsonStr);
         var count = Object.keys(jsonArr).length; //how many reviews there are
-        
+
         var sum = 0;
         jsonArr.forEach(function (obj) {
             sum += parseFloat(obj.rating);
         })
-        
+
         var aveRating = sum / count;//average review
 
-        var json =[];
+        var json = [];
         json.push(jsonArr[0]);
-        json.push({"numReviews":count, "aveRating":aveRating});
+        json.push({ "numReviews": count, "aveRating": aveRating });
         res.send(json);
-    });
-};
-
-//desplay details of a product ?name=harry+potter
-exports.song_details = function (req, res) {
-    Product.findOne({ name: req.params.name }, function (err, product) {
-        if (err) return console.error(err);
-        res.send(JSON.stringify(product));
     });
 };
 
@@ -109,6 +102,31 @@ exports.review_create = function (req, res) {
             return console.error(err);
         }
         console.log('Review Created Sucessfully');
+    });
+};
+
+//update existing song
+exports.update_song = function (req, res) {
+    const entries = Object.keys(req.body);
+    const updates = {};
+
+    // constructing dynamic query
+
+    for (let i = 0; i < entries.length; i++) {
+        updates[entries[i]] = Object.values(req.body)[i];
+    }
+    Song.update({"title": req.body.title}, { $set: updates }, function (err) {
+        if (err) throw (err);
+        console.log("update sucessful")
+    
+    });
+};
+
+//desplay details of a product ?name=harry+potter
+exports.song_details = function (req, res) {
+    Product.findOne({ name: req.params.name }, function (err, product) {
+        if (err) return console.error(err);
+        res.send(JSON.stringify(product));
     });
 };
 
