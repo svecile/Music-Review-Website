@@ -16,7 +16,7 @@ let SongSchema = new Schema({
     submittedOn: {type: Date, default:Date.now},
     numratings: {type: Number, required: false},
     averageRating: {type: Number, required: false, max: 5},
-    hidden: {type: Boolean, Default: false, required: false}
+    hidden: {type: Boolean, Default: false}
 }, {collection:'song', versionKey: false}
 );
 

@@ -70,7 +70,8 @@ exports.song_create = function (req, res) {
             zeroByte: 0,
             track: req.body.track,
             genre: req.body.genre,
-            submittedBy: req.body.submittedBy
+            submittedBy: req.body.submittedBy,
+            hidden: false
         }
     );
 

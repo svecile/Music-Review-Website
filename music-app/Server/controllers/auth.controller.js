@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Song = require('../models/song.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const secret =  'hello'; //process.env.JWT_KEY;
@@ -21,6 +22,7 @@ exports.new_user = function (req, res) {
                     {
                         email: req.body.email,
                         password: hash,
+                        admin:false
                     }
                 );
 
@@ -45,42 +47,73 @@ exports.validate_user = function (req, res) {
 
     User.findOne({ email: req.body.email }, function (err, results) {
         if (results == null) {
-            res.status(401).send(`Access denied for ${req.body.email}`);
+            res.status(401).send(`Access denied for ${req.body.email}, user does not exist`);
             console.log('User doesnt exist');
 
+        } else if (results.deactivated==true){
+            res.status(401).send(`Access denied for ${req.body.email}, user account deactivated, please contact site admin`);
+            console.log('User account deactivated');
         } else if (err) {
             return console.error(err);
-        }
-
-        bcrypt.compare(req.body.password, results.password, function (err, val) {
-            if (val == true) {
-                var payload;
-                if(results.admin==true){
-                    payload = { username: req.body.email, admin: true };
+        } else{
+            bcrypt.compare(req.body.password, results.password, function (err, val) {
+                if (val == true) {
+                    var payload;
+                    if(results.admin==true){
+                        payload = { username: req.body.email, admin: true };
+                    }
+                    payload = { username: req.body.email, admin: false }; // make up a payload for JWT
+                    let token = jwt.sign(payload, secret);		// make a token
+                    res.json(token);							// send it
+                    console.log('token: ' + token);
+                } else if (err){
+                    return console.error(err);
+                }else{
+                    res.status(401).send(`Access denied for ${req.body.email}`);
+                    console.log('Hashes don\'t match');
                 }
-                payload = { username: req.body.email, admin: false }; // make up a payload for JWT
-                let token = jwt.sign(payload, secret);		// make a token
-                res.json(token);							// send it
-                console.log('token: ' + token);
-            } else if (err){
-                return console.error(err);
-            }else{
-                res.status(401).send(`Access denied for ${req.body.email}`);
-                console.log('Hashes don\'t match');
-            }
-        });
+            });
+        }
     });
 };
 
-exports.make_admin = function(req, res){
-    User.updateOne({ "email": req.body.email }, {admin: true }, function (err, results) {
+//make a user an admin
+exports.set_admin = function(req, res){
+    User.updateOne({ email: req.body.email }, {admin: true }, function (err, results) {
         if (results == null) {
-            res.status(401).send(`Access denied for ${req.body.email}`);
+            res.status(401).send(`cannot find ${req.body.email} usr account`);
             console.log('User doesnt exist');
 
         } else if (err) {
             return console.error(err);
         }
         res.send(req.body.email +' is now an admin')
+    });
+};
+
+exports.set_hidden_flag = function(req, res){
+    Song.updateOne({ title: req.body.title, artist: req.body.artist }, {hidden: req.body.hidden }, function (err, results) {
+        if (results == null) {
+            res.status(401).send('song not found');
+            console.log('song not found');
+
+        } else if (err) {
+            return console.error(err);
+        }
+        res.send('Flag sucessfully updated')
+    });
+};
+
+//set user account as active or deactiveated
+exports.set_user_activity = function(req, res){
+    User.updateOne({ email: req.body.email }, {deactivated: req.body.deactivated }, function (err, results) {
+        if (results == null) {
+            res.status(401).send(` ${req.body.email} user doesnt exist`);
+            console.log('User doesnt exist');
+
+        } else if (err) {
+            return console.error(err);
+        }
+        res.send(req.body.email +' activity level changed')
     });
 };

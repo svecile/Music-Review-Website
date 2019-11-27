@@ -1,14 +1,2 @@
 
-<div class="layout-overflow">
-  <div
-    class="layout-canvas"
-    [ngClass]="{ 'nav-open': navOpen, 'nav-closed': !navOpen }"
-    [style.min-height]="minHeight">
-    <!-- HEADER -->
-    <app-navigation (navToggled)="navToggledHandler($event)"></app-navigation>
-    <!-- CONTENT -->
-    <div id="layout-view" class="layout-view">
-      <router-outlet></router-outlet>
-    </div>
-  </div> <!-- /.layout-canvas -->
-</div> <!-- /.layout-overflow -->
+<router-outlet></router-outlet>
