@@ -1,0 +1,10 @@
+<h1>Available Items</h1>
+
+<ul *ngIf="availableItems">
+    <li *ngFor="let item of availableItems">
+        <p class="name">Name: {{item.name}}</p>
+        <p class="type">Type: {{item.type}}</p>
+        <p class="loanPeroid">Loan Peroid: {{item.loanPeroid}}</p>
+        <p class="quantity">Quantity: {{item.quantity}}</p>
+    </li>
+</ul>
