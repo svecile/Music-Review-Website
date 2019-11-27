@@ -10,6 +10,7 @@ import { HttpService } from '../http.service';
 export class LoginComponent implements OnInit {
 
   userModel = new User('', '');
+  newUserModel = new User('', '');
 
   constructor(private _http: HttpService) { }
 
@@ -17,7 +18,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
+    this._http.authenticate(this.userModel).subscribe(data=>console.log(data));
+  }
 
-    this._http.authenticate(this.userModel).subscribe(data=>console.log('Item added', data));
+  newUser(){
+    this._http.newUser(this.newUserModel).subscribe(data=>console.log(data));
   }
 }

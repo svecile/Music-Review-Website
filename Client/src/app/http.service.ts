@@ -18,8 +18,16 @@ export class HttpService {
     return this.http.post<any>('http://3.82.47.246:8081/products/create', product);
   }
 
+  homeSongs(){
+    return this.http.get('http://localhost:8081/open/songs');
+  }
+  
   authenticate(user:User){
-    return this.http.post<any>('http://localhost:8081/auth/validate', user);
+    return this.http.post<any>('http://localhost:8081/open/validate', user);
+  }
+
+  newUser(user:User){
+    return this.http.put<any>('http://localhost:8081/open/new', user);
   }
   
 }

@@ -9,6 +9,8 @@ import {HttpService} from '../http.service';
 export class HomeComponent implements OnInit {
 
   availableItems: Object;
+  topSongs: Object;
+  song: Object;
   
   constructor(private _http: HttpService) { }
 
@@ -16,6 +18,16 @@ export class HomeComponent implements OnInit {
     this._http.getAll().subscribe(data => {
       this.availableItems = data;
     });
+
+    this._http.homeSongs().subscribe(data => {
+      this.topSongs = data;
+    });
   }
+
+  search(){
+
+  }
+
+
 
 }

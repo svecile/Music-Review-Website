@@ -1,4 +1,4 @@
-<h1>Available Items</h1>
+<h1>About</h1>
 
 <ul *ngIf="availableItems">
     <li *ngFor="let item of availableItems">
@@ -7,4 +7,35 @@
         <p class="loanPeroid">Loan Peroid: {{item.loanPeroid}}</p>
         <p class="quantity">Quantity: {{item.quantity}}</p>
     </li>
+</ul>
+<p>
+    This is a music site where you can post and review songs.
+</p>
+
+<h2>Most Reviewed Songs</h2>
+<ul *ngIf="topSongs">
+        <li *ngFor="let song of topSongs">
+            <p class="title">Title: {{song.title}}</p>
+            <p class="artist">Artist: {{song.artist}}</p>
+            <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
+        </li>
+</ul>
+
+<form #searchForm="ngForm" (ngSubmit)="search()" novalidate>
+
+    <div class="form-group">
+        <label for="search">Email </label>
+        <input name="song" type="text" maxlength="100" class="form-control" [(ngModel)]=song>
+    </div>
+    <button class="btn btn-primary">Create Account</button>
+</form>
+
+
+<ul *ngIf="topSongs">
+        <h2>Results</h2>
+        <li *ngFor="let song of songs">
+            <p class="title">Title: {{song.title}}</p>
+            <p class="artist">Artist: {{song.artist}}</p>
+            <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
+        </li>
 </ul>
