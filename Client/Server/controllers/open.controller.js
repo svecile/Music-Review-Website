@@ -1,8 +1,9 @@
-const User = require('../models/user.model');
 const Song = require('../models/song.model');
+const Review = require('../models/review.model');
+const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const secret =  'hello'; //process.env.JWT_KEY;
+const secret = 'hello'; //process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 
 exports.new_user = function (req, res) {
@@ -22,7 +23,7 @@ exports.new_user = function (req, res) {
                     {
                         email: req.body.email,
                         password: hash,
-                        admin:false
+                        admin: false
                     }
                 );
 
@@ -35,7 +36,7 @@ exports.new_user = function (req, res) {
 
                     res.send('user created sucessfully')
                 });
- 
+
             });
         }
     });
@@ -50,25 +51,25 @@ exports.validate_user = function (req, res) {
             res.status(401).send(`Access denied for ${req.body.email}, user does not exist`);
             console.log('User doesnt exist');
 
-        } else if (results.deactivated==true){
+        } else if (results.deactivated == true) {
             res.status(401).send(`Access denied for ${req.body.email}, user account deactivated, please contact site admin`);
             console.log('User account deactivated');
         } else if (err) {
             return console.error(err);
-        } else{
+        } else {
             bcrypt.compare(req.body.password, results.password, function (err, val) {
                 if (val == true) {
                     var payload;
-                    if(results.admin==true){
+                    if (results.admin == true) {
                         payload = { username: req.body.email, admin: true };
                     }
                     payload = { username: req.body.email, admin: false }; // make up a payload for JWT
                     let token = jwt.sign(payload, secret);		// make a token
                     res.json(token);							// send it
                     console.log('token: ' + token);
-                } else if (err){
+                } else if (err) {
                     return console.error(err);
-                }else{
+                } else {
                     res.status(401).send(`Access denied for ${req.body.email}`);
                     console.log('Hashes don\'t match');
                 }
@@ -76,44 +77,60 @@ exports.validate_user = function (req, res) {
         }
     });
 };
+//returns array of 10 songs ordered by average rating
+exports.home_songs = function (req, res) {
+    Song.find({}, ['title', 'artist', 'album', 'averageRating'],
+        { sort: { averageRating: -1 }, limit: 10 }, function (err, songs) {
 
-//make a user an admin
-exports.set_admin = function(req, res){
-    User.updateOne({ email: req.body.email }, {admin: true }, function (err, results) {
-        if (results == null) {
-            res.status(401).send(`cannot find ${req.body.email} usr account`);
-            console.log('User doesnt exist');
+            if (err) return console.error(err);
+            else {
+                res.json(songs);
+            }
+        });
+};
 
-        } else if (err) {
-            return console.error(err);
-        }
-        res.send(req.body.email +' is now an admin')
+//searches songs using text search so it ignores minor spelling mistakes, case, and whitespace
+//also gives it a ranking for how much it matches your keyword(s)
+exports.search_songs = function (req, res) {
+    Song.find({ $text: { $search: req.params.keyword } },
+        { score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } }).exec(function (err, songs) {
+
+            if (err) return console.error(err);
+            else {
+                res.json(songs);
+            }
+        });
+};
+
+//get all reviews for a song
+exports.all_song_reviews = function (req, res) {
+    Review.find({ song: req.params.songName }, function (err, reviews) { //get all reviews for a song
+        if (err) return console.error(err);
+
+        res.send(JSON.stringify(reviews));
     });
 };
 
-exports.set_hidden_flag = function(req, res){
-    Song.updateOne({ title: req.body.title, artist: req.body.artist }, {hidden: req.body.hidden }, function (err, results) {
-        if (results == null) {
-            res.status(401).send('song not found');
-            console.log('song not found');
+//get the average, most recent and total reviews for a song
+exports.song_review_details = function (req, res) {
+    Review.find({ song: req.params.songName }, null, { sort: { 'submittedOn': -1 } }, function (err, reviews) { //get all reviews for a song
+        if (err) return console.error(err);
 
-        } else if (err) {
-            return console.error(err);
-        }
-        res.send('Flag sucessfully updated')
+        var jsonStr = JSON.stringify(reviews);
+        var jsonArr = JSON.parse(jsonStr);
+        var count = Object.keys(jsonArr).length; //how many reviews there are
+
+        var sum = 0;
+        jsonArr.forEach(function (obj) {
+            sum += parseFloat(obj.rating);
+        })
+
+        var aveRating = sum / count;//average review
+
+        var json = [];
+        json.push(jsonArr[0]);
+        json.push({ "numReviews": count, "aveRating": aveRating });
+        res.send(json);
     });
 };
 
-//set user account as active or deactiveated
-exports.set_user_activity = function(req, res){
-    User.updateOne({ email: req.body.email }, {deactivated: req.body.deactivated }, function (err, results) {
-        if (results == null) {
-            res.status(401).send(` ${req.body.email} user doesnt exist`);
-            console.log('User doesnt exist');
-
-        } else if (err) {
-            return console.error(err);
-        }
-        res.send(req.body.email +' activity level changed')
-    });
-};

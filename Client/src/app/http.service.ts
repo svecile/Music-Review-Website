@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Product } from './product';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class HttpService {
 
   addItem(product:Product){
     return this.http.post<any>('http://3.82.47.246:8081/products/create', product);
+  }
+
+  authenticate(user:User){
+    return this.http.post<any>('http://localhost:8081/auth/validate', user);
   }
   
 }
