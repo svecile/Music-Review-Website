@@ -40,7 +40,7 @@ exports.review_create = function (req, res) {
         }
     );
     var numR;
-    Song.findOneAndUpdate({ title: req.body.song }, { $inc: { numRatings: 1 }}, function (err) { //get all reviews for a song
+    Song.update({ title: req.body.song }, { $inc: { numRatings: 1 }}, function (err) { //get all reviews for a song
         if (err) return console.error(err);    
     });
 

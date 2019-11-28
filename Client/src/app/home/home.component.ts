@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   results: Object;
   info=new Object();
   keywordModel = new Keyword('');
-  show: boolean=false;
+  showArr: boolean[]=[];
 
   songModel= new Song(null, null, null, null, null, null, null, null, null, null, null, null, null, null)
   constructor(private _http: HttpService) { }
@@ -36,10 +36,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  toggleShow(title:string){
+  toggleShow(title:string, i:string){
     this._http.getInfo(title).subscribe(data=>{
       this.info = data;
-      this.show = true;
+      
+      this.showArr[parseInt(i)] = true;
     });
   }
 }
