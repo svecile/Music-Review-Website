@@ -117,7 +117,7 @@ exports.song_review_details = function (req, res) {
         if (err) return console.error(err);
 
         var jsonStr = JSON.stringify(reviews);
-        var jsonArr = JSON.parse(jsonStr);
+        var jsonArr = JSON.parse(jsonStr); 
         var count = Object.keys(jsonArr).length; //how many reviews there are
 
         var sum = 0;

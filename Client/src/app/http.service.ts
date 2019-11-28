@@ -34,5 +34,9 @@ export class HttpService {
   search(keyword:Keyword){
     return this.http.get<any>('http://localhost:8081/open/search/'+keyword.word);
   }
+
+  getInfo(title:string){
+    return this.http.get<any>('http://localhost:8081/open/songReviewInfo/'+title);
+  }
   
 }

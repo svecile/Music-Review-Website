@@ -13,14 +13,17 @@ export class HomeComponent implements OnInit {
   availableItems: Object;
   topSongs: Object;
   results: Object;
+  info=new Object();
   keywordModel = new Keyword('');
+  show: boolean=false;
 
+  songModel= new Song(null, null, null, null, null, null, null, null, null, null, null, null, null, null)
   constructor(private _http: HttpService) { }
 
   ngOnInit() {
-    this._http.getAll().subscribe(data => {
-      this.availableItems = data;
-    });
+    //this._http.getAll().subscribe(data => {
+      //this.availableItems = data;
+    //});
 
     this._http.homeSongs().subscribe(data => {
       this.topSongs = data;
@@ -33,4 +36,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  toggleShow(title:string){
+    this._http.getInfo(title).subscribe(data=>{
+      this.info = data;
+      this.show = true;
+    });
+  }
 }

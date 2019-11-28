@@ -14,6 +14,8 @@ exports.song_create = function (req, res) {
             track: req.body.track,
             genre: req.body.genre,
             submittedBy: req.body.submittedBy,
+            numRatings:0,
+            averageRating:0,
             hidden: false
         }
     );
@@ -37,6 +39,10 @@ exports.review_create = function (req, res) {
             submittedBy: req.body.user
         }
     );
+    var numR;
+    Song.findOneAndUpdate({ title: req.body.song }, { $inc: { numRatings: 1 }}, function (err) { //get all reviews for a song
+        if (err) return console.error(err);    
+    });
 
     //save data to database
     review.save(function (err) {
@@ -44,6 +50,7 @@ exports.review_create = function (req, res) {
             return console.error(err);
         }
         console.log('Review Created Sucessfully');
+        res.send('review created sucessfullty');
     });
 };
 
@@ -57,7 +64,7 @@ exports.update_song = function (req, res) {
     for (let i = 0; i < entries.length; i++) {
         updates[entries[i]] = Object.values(req.body)[i];
     }
-    Song.update({"title": req.body.title}, { $set: updates }, function (err) {
+    Song.update({title: req.body.title}, { $set: updates }, function (err) {
         if (err) throw (err);
         console.log("update sucessful");
     });

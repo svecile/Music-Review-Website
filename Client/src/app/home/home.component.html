@@ -22,8 +22,8 @@
 </ul>
 <br>
 <br>
-<form #searchForm="ngForm" (ngSubmit)="search()" novalidate>
 
+<form #searchForm="ngForm" (ngSubmit)="search()" novalidate>
     <div class="form-group">
         <label for="search">Keyword </label>
         <input name="song" type="text" maxlength="100" class="form-control" [(ngModel)]=keywordModel.word>
@@ -33,11 +33,31 @@
 
 
 <ul *ngIf="results">
-        <h2>Results</h2>
-        <li *ngFor="let song of results">
-            <p class="title">Title: {{song.title}}</p>
-            <p class="artist">Artist: {{song.artist}}</p>
-            <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
-        </li>
+    <h2>Results</h2>
+
+    <li *ngFor="let song of results">
+        <p class="title">Title: {{song.title}}</p>
+        <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
+        <button class="btn btn-info" (click)='toggleShow(song.title)'>Song Info</button>
+        <div *ngIf= show&&!hidden>
+            <p *ngIf='song.artist'>Artist: {{song.artist}}</p>
+            <p *ngIf='song.album' class="album">Album: {{song.album}}</p>
+            <p *ngIf='song.year' class="year">Year: {{song.year}}</p>
+            <p *ngIf='song.comment' class="comment">Comment: {{song.comment}}</p>
+            <p *ngIf='song.header' class="header">Header: {{song.header}}</p>
+            <p *ngIf='song.zeroByte' class="zeroByte">ZeroByte: {{song.zeroByte}}</p>
+            <p *ngIf='song.track' class="track">Track: {{song.track}}</p>
+            <p *ngIf='song.genre' class="genre">Genre: {{song.genre}}</p>
+            <p *ngIf='song.submittedBy' class="submittedBy">Submitted By: {{song.submittedBy}}</p>
+            <p *ngIf='song.submittedOn' class="submittedOn">Submitted On: {{song.submittedOn}}</p>
+            <p *ngIf='info[1].numReviews' class="numRatings">Number of Ratings: {{info[1].numReviews}}</p>
+            <p *ngIf='info[1].aveRating' class="averageRating">Average Rating: {{info[1].aveRating}}</p>
+            
+            <p *ngIf='info[0].rating'>Rating: {{info[0].rating}}</p>
+            <p *ngIf='info[0].review'>Review: {{info[0].review}}</p>
+            <p *ngIf='info[0].submittedBy'>Submitted By: {{info[0].submittedBy}}</p>
+            <p *ngIf='info[0].submittedOn'>Submitted On: {{info[0].submittedOn}}</p>
+        </div>
+    </li>
 </ul>
 
