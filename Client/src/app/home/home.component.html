@@ -20,22 +20,24 @@
             <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
         </li>
 </ul>
-
+<br>
+<br>
 <form #searchForm="ngForm" (ngSubmit)="search()" novalidate>
 
     <div class="form-group">
-        <label for="search">Email </label>
-        <input name="song" type="text" maxlength="100" class="form-control" [(ngModel)]=song>
+        <label for="search">Keyword </label>
+        <input name="song" type="text" maxlength="100" class="form-control" [(ngModel)]=keywordModel.word>
     </div>
-    <button class="btn btn-primary">Create Account</button>
+    <button class="btn btn-primary">Search</button>
 </form>
 
 
-<ul *ngIf="topSongs">
+<ul *ngIf="results">
         <h2>Results</h2>
-        <li *ngFor="let song of songs">
+        <li *ngFor="let song of results">
             <p class="title">Title: {{song.title}}</p>
             <p class="artist">Artist: {{song.artist}}</p>
             <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
         </li>
 </ul>
+

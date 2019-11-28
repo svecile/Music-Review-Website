@@ -2,19 +2,19 @@ export class Song {
     constructor(
         public email: string,
         public password: string,
-        header: string,
-        title: string,
-        artist: string,
-        album: string,
-        year: number,
-        comment: string,
-        zeroByte: number,
-        track: number,
-        genre: string,
-        submittedBy: string,
-        submittedOn: string,
-        numRatings: number,
-        averageRating: number,
-        hidden: boolean
+        public header: string,
+        public title: string,
+        public artist: string,
+        public album: string,
+        public year: number,
+        public comment: string,
+        public zeroByte: number,
+        public track: number,
+        public genre: string,
+        public submittedBy: string,
+        public submittedOn: string,
+        public numRatings: number,
+        public averageRating: number,
+        public hidden: boolean
     ){}
 }

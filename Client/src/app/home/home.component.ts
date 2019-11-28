@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../http.service';
+import {Song} from "../song";
+import { Keyword } from '../keyword';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +12,9 @@ export class HomeComponent implements OnInit {
 
   availableItems: Object;
   topSongs: Object;
-  song: Object;
-  
+  results: Object;
+  keywordModel = new Keyword('');
+
   constructor(private _http: HttpService) { }
 
   ngOnInit() {
@@ -25,9 +28,9 @@ export class HomeComponent implements OnInit {
   }
 
   search(){
-
+    this._http.search(this.keywordModel).subscribe(data=>{
+      this.results = data;
+    });
   }
-
-
 
 }
