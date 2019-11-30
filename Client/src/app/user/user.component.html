@@ -1,1 +1,51 @@
-<p>user works!</p>
+<h3>Add New Song</h3>
+<form #songForm="ngForm" (ngSubmit)="newSong()" novalidate>
+    
+    <div class="form-group">
+        <label for="title">Title </label>
+        <input name="title" type="text" maxlength="30" class="form-control" [(ngModel)]="songModel.title">
+    </div>
+    <div class="form-group">
+        <label for="artist">Artist </label>
+        <input name="artist" type ="text" maxlength="30" class="form-control" [(ngModel)]="songModel.artist">
+    </div>
+    <div class="form-group">
+        <label for="album">Album </label>
+        <input name="album" type ="text" maxlength="30" class="form-control" [(ngModel)]="songModel.album">
+    </div>
+    <div class="form-group">
+        <label for="year">Year </label>
+        <input  name="year" type="number" min="1900" step="1" class="form-control" [(ngModel)]="songModel.year">
+    </div>
+    <div class="form-group">
+        <label for="comment">Comment </label>
+        <input name="comment" type="text" maxlength="30" class="form-control" [(ngModel)]="songModel.comment">
+    </div>
+    <div class="form-group">
+        <label for="track">Track Number </label>
+        <input  name="track" type="number" min="1" step="1" class="form-control" [(ngModel)]="songModel.track">
+    </div>
+    <div class="form-group">
+        <label for="genre">Genre </label>
+        <input name="genre" type ="text" class="form-control" [(ngModel)]="songModel.genre">
+    </div>
+    <button class="btn btn-primary">Save</button>
+</form>
+
+<h3>Add Review</h3>
+<form #reviewForm="ngForm" (ngSubmit)="newReview()" novalidate>
+    
+    <div class="form-group">
+        <label for="song">Song Title </label>
+        <input name="song" type="text" maxlength="30" class="form-control" [(ngModel)]="reviewModel.song">
+    </div>
+    <div class="form-group">
+        <label for="artist">Rating </label>
+        <input name="rating" type ="text" maxlength="30" class="form-control" [(ngModel)]="reviewModel.rating">
+    </div>
+    <div class="form-group">
+        <label for="review">Review </label>
+        <input name="review" type ="text" maxlength="30" class="form-control" [(ngModel)]="reviewModel.review">
+    </div>
+    <button class="btn btn-primary">Save</button>
+</form>

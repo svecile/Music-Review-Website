@@ -11,8 +11,9 @@ exports.new_user = function (req, res) {
     console.log(`Creating user ${email}`);
     User.findOne({ email: req.body.email }, function (err, results) {
         if (results) {
-            res.status(400).send(`Username ${req.body.email} not available`);
+            res.json(JSON.stringify(`Username ${req.body.email} not available`));
         } else if (err) {
+            res.json(JSON.stringify('An error occured while creating your account'));
             return console.error(err);
         } else {
             bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
@@ -32,11 +33,8 @@ exports.new_user = function (req, res) {
                     if (err) {
                         return console.error(err);
                     }
-                    console.log('User Created Sucessfully');
-
-                    res.send('user created sucessfully')
+                    res.json(JSON.stringify('User created sucessfully'));
                 });
-
             });
         }
     });
@@ -48,11 +46,11 @@ exports.validate_user = function (req, res) {
 
     User.findOne({ email: req.body.email }, function (err, results) {
         if (results == null) {
-            res.status(401).send(`Access denied for ${req.body.email}, user does not exist`);
+            res.send(JSON.stringify(`Access denied for ${req.body.email}, user does not exist`));
             console.log('User doesnt exist');
 
         } else if (results.deactivated == true) {
-            res.status(401).send(`Access denied for ${req.body.email}, user account deactivated, please contact site admin`);
+            res.send(JSON.stringify(`Access denied for ${req.body.email}, user account deactivated, please contact site admin at admin@gmail.com`));
             console.log('User account deactivated');
         } else if (err) {
             return console.error(err);
@@ -65,12 +63,17 @@ exports.validate_user = function (req, res) {
                     }
                     payload = { username: req.body.email, admin: false }; // make up a payload for JWT
                     let token = jwt.sign(payload, secret);		// make a token
-                    res.json(token);							// send it
+                    
+                    var obj=[]
+                    obj.push('Login Sucessful! ');
+                    obj.push(token);
+                    obj.push(req.body.email)
+                    res.json(obj);							// send it
                     console.log('token: ' + token);
                 } else if (err) {
                     return console.error(err);
                 } else {
-                    res.status(401).send(`Access denied for ${req.body.email}`);
+                    res.send(JSON.stringify(`Access denied for ${req.body.email} password is incorrect`));
                     console.log('Hashes don\'t match');
                 }
             });
@@ -79,8 +82,8 @@ exports.validate_user = function (req, res) {
 };
 //returns array of 10 songs ordered by average rating
 exports.home_songs = function (req, res) {
-    Song.find({}, ['title', 'artist', 'album', 'averageRating'],
-        { sort: { averageRating: -1 }, limit: 10 }, function (err, songs) {
+    Song.find({}, ['title', 'artist', 'album', 'numRatings'],
+        { sort: { numRatings: -1 }, limit: 10 }, function (err, songs) {
 
             if (err) return console.error(err);
             else {
@@ -113,6 +116,7 @@ exports.all_song_reviews = function (req, res) {
 
 //get the average, most recent and total reviews for a song
 exports.song_review_details = function (req, res) {
+    
     Review.find({ song: req.params.songName }, null, { sort: { 'submittedOn': -1 } }, function (err, reviews) { //get all reviews for a song
         if (err) return console.error(err);
 

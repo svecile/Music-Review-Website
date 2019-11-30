@@ -3,6 +3,12 @@ const Review = require('../models/review.model');
 
 //create new song using data coming from a Put request
 exports.song_create = function (req, res) {
+    //make sure title and artist feilds are entered
+    if(req.body.title=="" || req.body.artist==""){
+        res.send(JSON.stringify('Error title and artist feilds are required!'));
+        return;
+    }
+
     let song = new Song(
         {
             title: req.body.title,
@@ -23,9 +29,10 @@ exports.song_create = function (req, res) {
     //save data to database
     song.save(function (err) {
         if (err) {
+            res.send(JSON.stringify('Error title and artist feilds are required'))
             return console.error(err);
         }
-        console.log('Song Created Sucessfully');
+        res.send(JSON.stringify('Song Created Sucessfully'));
     });
 };
 
@@ -36,21 +43,26 @@ exports.review_create = function (req, res) {
             song: req.body.song,
             rating: req.body.rating,
             review: req.body.review,
-            submittedBy: req.body.user
+            submittedBy: req.body.submittedBy
         }
     );
-    var numR;
-    Song.update({ title: req.body.song }, { $inc: { numRatings: 1 }}, function (err) { //get all reviews for a song
-        if (err) return console.error(err);    
-    });
 
     //save data to database
     review.save(function (err) {
         if (err) {
+            res.send(JSON.stringify('Error rating and song name must be entered!'))
             return console.error(err);
+        }else{
+            console.log('Review Created Sucessfully');
+            res.send(JSON.stringify('Review created sucessfullty'));
         }
-        console.log('Review Created Sucessfully');
-        res.send('review created sucessfullty');
+    });
+
+    Song.update({ title: req.body.song }, { $inc: { numRatings: 1 }}, function (err) {
+        if (err) {
+            res.send(JSON.stringify('Error song not found!'))
+            return console.error(err);
+        }   
     });
 };
 

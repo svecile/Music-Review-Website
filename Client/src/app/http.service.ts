@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Product } from './product';
 import { User } from './user';
 import { Song } from './song';
 import {Keyword} from './keyword'
+import { Review } from './review';
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
+  
   getAll(){
     return this.http.get('http://3.82.47.246:8081/products/getAll');
   }
@@ -37,6 +39,14 @@ export class HttpService {
 
   getInfo(title:string){
     return this.http.get<any>('http://localhost:8081/open/songReviewInfo/'+title);
+  }
+
+  newSong(song:Song){
+    return this.http.put<any>('http://localhost:8081/user/newSong', song);
+  }
+
+  newReview(review:Review){
+    return this.http.put<any>('http://localhost:8081/user/addReview', review);
   }
   
 }

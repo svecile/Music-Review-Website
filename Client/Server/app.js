@@ -3,6 +3,7 @@ const app = express();//create app using express
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors=require('cors');
+var logger = require('morgan');
 
 const uri = "mongodb+srv://svecile:Mwwd576%21@lab3-crop3.mongodb.net/lab5?retryWrites=true&w=majority";
 
@@ -16,7 +17,7 @@ console.log('connected to the database (mongoose)');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
-
+app.use(logger('dev'));
 
 //import routes
 const oRouter = require('./routes/open.route');

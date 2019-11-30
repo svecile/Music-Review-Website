@@ -10,11 +10,11 @@ validate_token = function (req, res, next) {
     console.log("Auth: " + req.headers.authorization);
 
     if (typeof req.headers.authorization === 'undefined') {
-        return res.status(401).send("Access denied. Missing Auth header.");
+        return res.send(JSON.stringify("Access denied. Missing Auth header."));
     }
     const token = req.headers.authorization.split(" ");
     if (!token[0].startsWith("Bearer")) { // Check first element. Must be "Bearer"
-        return res.status(401).send("Access denied. Missing Token.");
+        return res.send(JSON.stringify("Access denied. Missing Token."));
     }
 
     try {
@@ -23,7 +23,7 @@ validate_token = function (req, res, next) {
         next();
     } catch (ex) {
         //if invalid token
-        return res.status(401).send("Access denied. Invalid token.");
+        return res.send(JSON.stringify("Access denied. Invalid token."));
     }
 };
 

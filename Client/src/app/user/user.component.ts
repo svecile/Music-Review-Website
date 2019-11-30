@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Song } from '../song';
+import { HttpService } from '../http.service';
+import { Review } from '../review';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _http:HttpService) { }
 
   ngOnInit() {
+  }
+
+  songModel = new Song( null, null, null, null, null, null, null, null, null, localStorage.getItem('email'), null, null, null, null);
+  reviewModel = new Review(null, null, null, null);
+
+  newSong(){
+    this.songModel.submittedBy= localStorage.getItem('email');
+    this._http.newSong(this.songModel).subscribe(data=>alert(data));
+  }
+
+  newReview(){
+    this.reviewModel.submittedBy= localStorage.getItem('email');
+    this._http.newReview(this.reviewModel).subscribe(data=>alert(data));
   }
 
 }

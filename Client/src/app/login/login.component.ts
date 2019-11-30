@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { HttpService } from '../http.service';
+import { Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,16 +13,31 @@ export class LoginComponent implements OnInit {
   userModel = new User('', '');
   newUserModel = new User('', '');
 
+  email= new FormControl('',[
+    Validators.required,
+    Validators.email
+  ]);
+  
   constructor(private _http: HttpService) { }
 
   ngOnInit() {
   }
 
   onSubmit(){
-    this._http.authenticate(this.userModel).subscribe(data=>console.log(data));
+    this._http.authenticate(this.userModel).subscribe(data=>{
+      
+      alert(data);
+
+      if(Object.keys(data).length==2){
+        localStorage.setItem('token', data[1]);
+        //alert(data[0]);
+        localStorage.setItem('email', data[2]);
+        console.log(data)
+      }
+    });
   }
 
   newUser(){
-    this._http.newUser(this.newUserModel).subscribe(data=>console.log(data));
+    this._http.newUser(this.newUserModel).subscribe(data=>alert(data));
   }
 }
