@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 app.use(logger('dev'));
-
+app.use('/api/', function (req, res, next) {next()})
 //import routes
 const oRouter = require('./routes/open.route');
 const uRouter = require('./routes/user.route');
@@ -26,7 +26,7 @@ const aRouter = require('./routes/admin.route');
 oRouter.use(express.json());
 uRouter.use(express.json());
 aRouter.use(express.json());
-app.use('/public', oRouter);
+app.use('/api/public', oRouter);
 app.use('/user', uRouter);
 app.use('/admin', aRouter);
 

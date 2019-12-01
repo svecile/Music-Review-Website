@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const secret = process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
+const Fuse = require('fuse.js');
 
 exports.new_user = function (req, res) {
     let email = req.body.email;
@@ -82,12 +83,15 @@ exports.validate_user = function (req, res) {
             return console.error(err);
         } else {
             bcrypt.compare(req.body.password, results.password, function (err, val) {
+                var ad=false;
+
                 if (val == true) {
                     
                     var payload = { username: req.body.email, admin: false }; // make up a payload for JWT
                     
                     if (results.admin == true) {//check if user account is an admin
                         payload = { username: req.body.email, admin: true };
+                        ad=true; //variable to read on angular side to post an admin banner
                     }
                     let token = jwt.sign(payload, secret);		// make a token
                     
@@ -95,6 +99,7 @@ exports.validate_user = function (req, res) {
                     obj.push('Login Sucessful! ');
                     obj.push(token);
                     obj.push(req.body.email)
+                    obj.push(ad);
                     res.json(obj);							// send it
                     console.log('token: ' + token);
                 } else if (err) {
@@ -121,16 +126,29 @@ exports.home_songs = function (req, res) {
 
 //searches songs using text search so it ignores minor spelling mistakes, case, and whitespace
 //also gives it a ranking for how much it matches your keyword(s)
-exports.search_songs = function (req, res) {
-    Song.find({ $text: { $search: req.params.keyword } },
-        { score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } }).exec(function (err, songs) {
 
-            if (err) return console.error(err);
-            else {
-                res.json(songs);
-            }
-        });
-};
+exports.soft_search = function(req, res){
+    Song.find({}, function(err, songs){
+        if(err) return console.log(err);
+
+        var options = {
+            shouldSort: true,
+            tokenize: true,
+            findAllMatches: true,
+            threshold: 0.3,
+            location: 0,
+            distance: 10,
+            maxPatternLength: 32,
+            minMatchCharLength: 4,
+            keys: ["title","artist","album","comment","genre","submittedBy"]
+          };
+          
+        var fuse = new Fuse(songs, options);
+        var result = fuse.search(req.params.keyword);
+    
+        res.send(result);
+    })
+}
 
 //get all reviews for a song
 exports.all_song_reviews = function (req, res) {
