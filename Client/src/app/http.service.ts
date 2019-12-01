@@ -5,6 +5,7 @@ import { Song } from './song';
 import {Keyword} from './keyword'
 import { Review } from './review';
 import { Policy } from './policy';
+import { Record } from './record';
 @Injectable({
   providedIn: 'root'
 })
@@ -77,4 +78,7 @@ export class HttpService {
     return this.http.get<any>('/api/public/getPolicy');
   }
 
+  createRecord(record:Record){
+    return this.http.put<any>('/api/admin/newRecord', record);
+  }
 }

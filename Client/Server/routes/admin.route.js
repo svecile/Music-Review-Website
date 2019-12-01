@@ -20,11 +20,11 @@ validate_token = function (req, res, next) {
         // Verify the token
         const payload = jwt.verify(token[1], secret);
         //check if token is an admin token
-        if(payload.admin){
-            console.log("JWT: ", JSON.stringify(payload)); 
+        if (payload.admin) {
+            console.log("JWT: ", JSON.stringify(payload));
             next();
         }
-        else{
+        else {
             return res.send(JSON.stringify("Access denied. Invalid token you are not an admin!"));
         }
     } catch (ex) {
@@ -45,5 +45,6 @@ aRouter.put('/newPPolicy', admin_controller.pPolicy_create); //create new policy
 aRouter.post('/updatePPolicy', admin_controller.update_pPolicy); //update policy
 aRouter.put('/newPolicy', admin_controller.policy_create); //create new policy
 aRouter.post('/updatePolicy', admin_controller.update_policy); //update policy
+aRouter.put('/newRecord', admin_controller.new_record);//create a new infringement notice/takedown request/dispute claim
 
 module.exports = aRouter;

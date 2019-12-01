@@ -4,6 +4,7 @@ import { HttpService } from '../http.service';
 import { Song } from '../song';
 import { User } from '../user';
 import { Policy } from '../policy';
+import { Record } from '../record';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +20,8 @@ export class AdminComponent implements OnInit {
   policyPUpdateModel = new Policy(null, null);
   policyModel = new Policy(null, null);
   policyUpdateModel = new Policy(null, null);
-
+  recordModel=new Record(null,null,null);
+  
   constructor(private _http:HttpService) { }
 
   ngOnInit() {
@@ -51,5 +53,9 @@ export class AdminComponent implements OnInit {
 
   updatePolicy(){
     this._http.updatePolicy(this.policyUpdateModel).subscribe(data=>alert(data));
+  }
+
+  createRecord(){
+    this._http.createRecord(this.recordModel).subscribe(data=>alert(data));
   }
 }
