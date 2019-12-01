@@ -10,8 +10,7 @@ import { Validators, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  userModel = new User('', '');
-  newUserModel = new User('', '');
+  userModel = new User(null, null, null, null);
 
   email= new FormControl('',[
     Validators.required,
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
       
       alert(data);
 
-      if(Object.keys(data).length==2){
+      if(Object.keys(data).length==3){
         localStorage.setItem('token', data[1]);
         //alert(data[0]);
         localStorage.setItem('email', data[2]);
@@ -38,6 +37,6 @@ export class LoginComponent implements OnInit {
   }
 
   newUser(){
-    this._http.newUser(this.newUserModel).subscribe(data=>alert(data));
+    this._http.newUser(this.userModel).subscribe(data=>alert(data));
   }
 }

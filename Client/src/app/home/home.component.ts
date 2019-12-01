@@ -21,10 +21,6 @@ export class HomeComponent implements OnInit {
   constructor(private _http: HttpService) { }
 
   ngOnInit() {
-    //this._http.getAll().subscribe(data => {
-      //this.availableItems = data;
-    //});
-
     this._http.homeSongs().subscribe(data => {
       this.topSongs = data;
     });

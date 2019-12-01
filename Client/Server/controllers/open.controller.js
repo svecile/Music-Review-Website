@@ -1,6 +1,7 @@
 const Song = require('../models/song.model');
 const Review = require('../models/review.model');
 const User = require('../models/user.model');
+const PrivacyPolicy=require('../models/privacy.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const secret = 'hello'; //process.env.JWT_KEY;
@@ -57,11 +58,12 @@ exports.validate_user = function (req, res) {
         } else {
             bcrypt.compare(req.body.password, results.password, function (err, val) {
                 if (val == true) {
-                    var payload;
-                    if (results.admin == true) {
+                    
+                    var payload = { username: req.body.email, admin: false }; // make up a payload for JWT
+                    
+                    if (results.admin == true) {//check if user account is an admin
                         payload = { username: req.body.email, admin: true };
                     }
-                    payload = { username: req.body.email, admin: false }; // make up a payload for JWT
                     let token = jwt.sign(payload, secret);		// make a token
                     
                     var obj=[]
@@ -135,6 +137,14 @@ exports.song_review_details = function (req, res) {
         json.push(jsonArr[0]);
         json.push({ "numReviews": count, "aveRating": aveRating });
         res.send(json);
+    });
+};
+
+exports.get_policy = function (req, res) {
+    PrivacyPolicy.find({}, null, { sort: { submittedOn: -1 }, limit: 1 }, function (err, policy) { //get all reviews for a song
+        if (err) return console.error(err);
+
+        res.send(policy);
     });
 };
 

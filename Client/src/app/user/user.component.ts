@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
-  songModel = new Song( null, null, null, null, null, null, null, null, null, localStorage.getItem('email'), null, null, null, null);
+  songModel = new Song( null, null, null, null, null, null, null, null, null, null, null, null, null, null);
   reviewModel = new Review(null, null, null, null);
 
   newSong(){

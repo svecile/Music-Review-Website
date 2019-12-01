@@ -1,1 +1,76 @@
-<p>admin works!</p>
+<h3>Grant User Site Manager Privilege</h3>
+<form #adminForm="ngForm" (ngSubmit)="makeAdmin()" novalidate>
+    
+    <div class="form-group">
+        <label for="title">Email </label>
+        <input name="title" type="email" maxlength="100" class="form-control" [(ngModel)]="keyword.word">
+    </div>
+    <button class="btn btn-primary">Update</button>
+</form>
+
+<h3>Set Song Hidden Flag</h3>
+<form #songHiddenForm="ngForm" (ngSubmit)="setHidden()" novalidate>
+    
+    <div class="form-group">
+        <label for="title">Song Title </label>
+        <input name="title" type="text" maxlength="30" class="form-control" [(ngModel)]="songModel.title">
+    </div>
+    <div class="form-group">
+        <label for="artist">Artist </label>
+        <input name="artist" type ="text" maxlength="30" class="form-control" [(ngModel)]="songModel.artist">
+    </div>
+    <div>
+        <label for="hidden">Hidden </label>
+        <select name="hidden" type ="text" class="form-control" [(ngModel)]="songModel.hidden">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+        </select>
+    </div>
+    <button class="btn btn-primary">Update</button>
+</form>
+
+<h3>Activate or Deactivate User Account</h3>
+<form #setActivityForm="ngForm" (ngSubmit)="setActivity()" novalidate>
+    
+    <div class="form-group">
+        <label for="email">Email </label>
+        <input name="email" type="email" maxlength="100" class="form-control" [(ngModel)]="userModel.email">
+    </div>
+    <div>
+        <label for="deactivated">Active? </label>
+        <select name="deactivated" type ="text" class="form-control" [(ngModel)]="userModel.deactivated">
+                <option value="false">Yes</option>
+                <option value="true">No</option>
+        </select>
+    </div>
+    <button class="btn btn-primary">Update</button>
+</form>
+
+<h3>New Privacy Policy</h3>
+<form #newPolicyForm="ngForm" (ngSubmit)="newPolicy()">
+
+    <div class="form-group">
+        <label for="name">Policy ID </label>
+        <input name="name" type="text" maxlength="100" class="form-control" [(ngModel)]="policyModel.name">
+    </div>
+    <div class="form-group">
+            <label for="policy">Policy </label>
+            <input name="policy" type="text" class="form-control" [(ngModel)]="policyModel.policy">
+    </div>
+    <button class="btn btn-primary">Save</button>
+</form>
+
+<h3>Update Privacy Policy</h3>
+<form #updatePolicyForm="ngForm" (ngSubmit)="updatePolicy()">
+
+    <div class="form-group">
+        <label for="name">Policy ID </label>
+        <input name="name" type="text" maxlength="100" class="form-control" [(ngModel)]="policyUpdateModel.name">
+    </div>
+    <div class="form-group">
+            <label for="policy">Policy </label>
+            <input name="policy" type="text" class="form-control" [(ngModel)]="policyUpdateModel.policy">
+    </div>
+    <button class="btn btn-primary">Update</button>
+</form>
+

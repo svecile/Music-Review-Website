@@ -1,25 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Product } from './product';
 import { User } from './user';
 import { Song } from './song';
 import {Keyword} from './keyword'
 import { Review } from './review';
+import { Policy } from './policy';
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
   constructor(private http: HttpClient) {}
-
-  
-  getAll(){
-    return this.http.get('http://3.82.47.246:8081/products/getAll');
-  }
-
-  addItem(product:Product){
-    return this.http.post<any>('http://3.82.47.246:8081/products/create', product);
-  }
 
   homeSongs(){
     return this.http.get('http://localhost:8081/open/songs');
@@ -49,4 +40,25 @@ export class HttpService {
     return this.http.put<any>('http://localhost:8081/user/addReview', review);
   }
   
+  makeAdmin(keyword:Keyword){
+    return this.http.post<any>('http://localhost:8081/admin/makeAdmin', keyword);
+  }
+
+  setHidden(song:Song){
+    return this.http.post<any>('http://localhost:8081/admin/updateSongFlag', song);
+  }
+
+  setActivity(user:User){
+    return this.http.post<any>('http://localhost:8081/admin/updateUserActivity', user);
+  }
+  newPolicy(policy:Policy){
+    return this.http.put<any>('http://localhost:8081/admin/newPolicy', policy);
+  }
+  updatePolicy(policy:Policy){
+    return this.http.post<any>('http://localhost:8081/admin/updatePolicy', policy);
+  }
+
+  getPolicy(){
+    return this.http.get<any>('http://localhost:8081/open/getPolicy');
+  }
 }
