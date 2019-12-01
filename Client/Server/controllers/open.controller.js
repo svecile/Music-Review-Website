@@ -2,6 +2,7 @@ const Song = require('../models/song.model');
 const Review = require('../models/review.model');
 const User = require('../models/user.model');
 const PrivacyPolicy=require('../models/privacy.model');
+const DMCAPolicy = require('../models/DMCA.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const secret = process.env.JWT_KEY;
@@ -184,8 +185,16 @@ exports.song_review_details = function (req, res) {
     });
 };
 
-exports.get_policy = function (req, res) {
+exports.get_pPolicy = function (req, res) {
     PrivacyPolicy.find({}, null, { sort: { submittedOn: -1 }, limit: 1 }, function (err, policy) { //get all reviews for a song
+        if (err) return console.error(err);
+
+        res.send(policy);
+    });
+};
+
+exports.get_policy = function (req, res) {
+    DMCAPolicy.find({}, null, { sort: { submittedOn: -1 }, limit: 1 }, function (err, policy) { //get all reviews for a song
         if (err) return console.error(err);
 
         res.send(policy);

@@ -6,6 +6,7 @@ import {LoginComponent} from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { DMCAComponent } from './dmca/dmca.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'user', component: UserComponent},
   {path: 'admin', component: AdminComponent},
-  {path: 'privacy', component: PrivacyComponent}
+  {path: 'privacy', component: PrivacyComponent},
+  {path: 'dmca', component: DMCAComponent}
 ];
 
 @NgModule({

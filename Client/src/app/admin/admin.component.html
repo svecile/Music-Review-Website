@@ -47,6 +47,34 @@
 </form>
 
 <h3>New Privacy Policy</h3>
+<form #newPPolicyForm="ngForm" (ngSubmit)="newPPolicy()">
+
+    <div class="form-group">
+        <label for="name">Policy ID </label>
+        <input name="name" type="text" maxlength="100" class="form-control" [(ngModel)]="policyPModel.name">
+    </div>
+    <div class="form-group">
+            <label for="policy">Policy </label>
+            <input name="policy" type="text" class="form-control" [(ngModel)]="policyPModel.policy">
+    </div>
+    <button class="btn btn-primary">Save</button>
+</form>
+
+<h3>Update Privacy Policy</h3>
+<form #updatePPolicyForm="ngForm" (ngSubmit)="updatePPolicy()">
+
+    <div class="form-group">
+        <label for="name">Policy ID </label>
+        <input name="name" type="text" maxlength="100" class="form-control" [(ngModel)]="policyPUpdateModel.name">
+    </div>
+    <div class="form-group">
+            <label for="policy">Policy </label>
+            <input name="policy" type="text" class="form-control" [(ngModel)]="policyPUpdateModel.policy">
+    </div>
+    <button class="btn btn-primary">Update</button>
+</form>
+
+<h3>New DMCA Policy</h3>
 <form #newPolicyForm="ngForm" (ngSubmit)="newPolicy()">
 
     <div class="form-group">
@@ -60,7 +88,7 @@
     <button class="btn btn-primary">Save</button>
 </form>
 
-<h3>Update Privacy Policy</h3>
+<h3>Update DMCA Policy</h3>
 <form #updatePolicyForm="ngForm" (ngSubmit)="updatePolicy()">
 
     <div class="form-group">

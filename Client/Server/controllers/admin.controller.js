@@ -1,6 +1,8 @@
 const User = require('../models/user.model');
 const Song = require('../models/song.model');
 const PrivacyPolicy=require('../models/privacy.model')
+const DMCAPolicy=require('../models/DMCA.model');
+
 //make a user an admin
 exports.set_admin = function (req, res) {
     User.updateOne({ email: req.body.word }, { admin: true }, function (err, results) {
@@ -45,7 +47,8 @@ exports.set_user_activity = function (req, res) {
     });
 };
 
-exports.policy_create = function (req, res) {
+//create privacy policy
+exports.pPolicy_create = function (req, res) {
     let policy = new PrivacyPolicy(
         {
             name:req.body.name,
@@ -65,8 +68,40 @@ exports.policy_create = function (req, res) {
     });
 };
 
-exports.update_policy = function (req, res) {
+//update privacy policy
+exports.update_pPolicy = function (req, res) {
     PrivacyPolicy.update({name: req.body.name}, { policy: req.body.policy }, function (err) {
+        if (err) console.log(err);
+        else{
+        res.send(JSON.stringify("Update sucessful"));
+        }
+    });
+};
+
+//create DMCA policy
+exports.policy_create = function (req, res) {
+    let policy = new DMCAPolicy(
+        {
+            name:req.body.name,
+            policy: req.body.policy
+        }
+    );
+
+    //save data to database
+    policy.save(function (err) {
+        if (err) {
+            res.send(JSON.stringify('Error policy and name must be entered!'))
+            return console.error(err);
+        }else{
+            console.log('Policy Created Sucessfully');
+            res.send(JSON.stringify('Policy created successfully'));
+        }
+    });
+};
+
+//update DMCA policy
+exports.update_policy = function (req, res) {
+    DMCAPolicy.update({name: req.body.name}, { policy: req.body.policy }, function (err) {
         if (err) console.log(err);
         else{
         res.send(JSON.stringify("Update sucessful"));

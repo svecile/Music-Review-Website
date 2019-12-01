@@ -15,6 +15,8 @@ export class AdminComponent implements OnInit {
   keyword = new Keyword(null);
   userModel = new User(null, null, null, null);
   songModel = new Song( null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+  policyPModel = new Policy(null, null);
+  policyPUpdateModel = new Policy(null, null);
   policyModel = new Policy(null, null);
   policyUpdateModel = new Policy(null, null);
 
@@ -33,6 +35,14 @@ export class AdminComponent implements OnInit {
 
   setActivity(){
     this._http.setActivity(this.userModel).subscribe(data=>alert(data));
+  }
+
+  newPPolicy(){
+    this._http.newPPolicy(this.policyPModel).subscribe(data=>alert(data));
+  }
+
+  updatePPolicy(){
+    this._http.updatePPolicy(this.policyPUpdateModel).subscribe(data=>alert(data));
   }
 
   newPolicy(){

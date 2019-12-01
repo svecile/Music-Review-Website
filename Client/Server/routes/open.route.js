@@ -9,6 +9,6 @@ oRouter.get('/songReviewInfo/:songName', open_controller.song_review_details)//
 oRouter.get('/reviews/:songName', open_controller.all_song_reviews); //return all reviews for a given song ID
 oRouter.put('/new', open_controller.new_user);//create new user
 oRouter.post('/validate', open_controller.validate_user);
-oRouter.get('/getPolicy',open_controller.get_policy); //get most recent privacy policy
-
+oRouter.get('/getpPolicy',open_controller.get_pPolicy); //get most recent privacy policy
+oRouter.get('/getPolicy',open_controller.get_policy);//get DMCA policy
 module.exports = oRouter;

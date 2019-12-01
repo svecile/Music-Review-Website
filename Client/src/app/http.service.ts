@@ -55,9 +55,20 @@ export class HttpService {
   setActivity(user:User){
     return this.http.post<any>('/api/admin/updateUserActivity', user);
   }
+  newPPolicy(policy:Policy){
+    return this.http.put<any>('/api/admin/newpPolicy', policy);
+  }
+  updatePPolicy(policy:Policy){
+    return this.http.post<any>('/api/admin/updatePPolicy', policy);
+  }
+
+  getpPolicy(){
+    return this.http.get<any>('/api/public/getpPolicy');
+  }
   newPolicy(policy:Policy){
     return this.http.put<any>('/api/admin/newPolicy', policy);
   }
+
   updatePolicy(policy:Policy){
     return this.http.post<any>('/api/admin/updatePolicy', policy);
   }

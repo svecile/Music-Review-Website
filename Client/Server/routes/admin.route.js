@@ -41,6 +41,8 @@ aRouter.post('/updateUserActivity', admin_controller.set_user_activity);
 aRouter.post('/copyright/:id'); //Set or update copyright violation attributes for a given song ID. JSON array with new values is provided in the body
 aRouter.get('/copyright'); //Return all songs which are marked as copyright violations
 aRouter.post('/deactivate/:id'); //Set or clear “account deactivated” flag for a given user
+aRouter.put('/newPPolicy', admin_controller.pPolicy_create); //create new policy
+aRouter.post('/updatePPolicy', admin_controller.update_pPolicy); //update policy
 aRouter.put('/newPolicy', admin_controller.policy_create); //create new policy
 aRouter.post('/updatePolicy', admin_controller.update_policy); //update policy
 
