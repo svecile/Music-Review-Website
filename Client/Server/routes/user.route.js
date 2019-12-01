@@ -1,7 +1,7 @@
 const express = require('express');
 const uRouter = express.Router();
 const user_controller = require('../controllers/user.controller');
-const secret = 'hello'; //process.env.JWT_KEY;
+const secret=process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 
 //validate to make sure person is a user or an admin

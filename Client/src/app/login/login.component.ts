@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
       if(Object.keys(data).length==3){
         localStorage.setItem('token', data[1]);
-        //alert(data[0]);
         localStorage.setItem('email', data[2]);
         console.log(data)
       }

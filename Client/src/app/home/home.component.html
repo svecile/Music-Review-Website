@@ -1,25 +1,18 @@
 <h1>About</h1>
-
-<ul *ngIf="availableItems">
-    <li *ngFor="let item of availableItems">
-        <p class="name">Name: {{item.name}}</p>
-        <p class="type">Type: {{item.type}}</p>
-        <p class="loanPeroid">Loan Peroid: {{item.loanPeroid}}</p>
-        <p class="quantity">Quantity: {{item.quantity}}</p>
-    </li>
-</ul>
 <p>
     This is a music site where you can post and review songs.
 </p>
 
 <h2>Most Reviewed Songs</h2>
-<ul *ngIf="topSongs">
-        <li *ngFor="let song of topSongs">
-            <p class="title">Title: {{song.title}}</p>
-            <p class="artist">Artist: {{song.artist}}</p>
-            <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
+<div *ngIf="topSongs">
+    <ul *ngFor="let song of topSongs">
+        <li *ngIf='!song.hidden'>
+            <p *ngIf='!song.hidden' class="title">Title: {{song.title}}</p>
+            <p *ngIf='!song.hidden' class="artist">Artist: {{song.artist}}</p>
+            <p *ngIf='!song.hidden' class="numRatings">Number of Reviews: {{song.numRatings}}</p>
         </li>
-</ul>
+    </ul>
+</div>
 <br>
 <br>
 
@@ -31,33 +24,47 @@
     <button class="btn btn-primary">Search</button>
 </form>
 
-
-<ul *ngIf="results">
+<div *ngIf="results">
     <h2>Results</h2>
-
-    <li *ngFor="let song of results; let i = index;">
-        <p class="title">Title: {{song.title}}</p>
-        <p class="numRatings">Number of Reviews: {{song.numRatings}}</p>
-        <button class="btn btn-info" (click)='toggleShow(song.title, i)'>Song Info</button>
-        <div *ngIf= showArr[i]&&!hidden>
-            <p *ngIf='song.artist'>Artist: {{song.artist}}</p>
-            <p *ngIf='song.album' class="album">Album: {{song.album}}</p>
-            <p *ngIf='song.year' class="year">Year: {{song.year}}</p>
-            <p *ngIf='song.comment' class="comment">Comment: {{song.comment}}</p>
-            <p *ngIf='song.header' class="header">Header: {{song.header}}</p>
-            <p *ngIf='song.zeroByte' class="zeroByte">ZeroByte: {{song.zeroByte}}</p>
-            <p *ngIf='song.track' class="track">Track: {{song.track}}</p>
-            <p *ngIf='song.genre' class="genre">Genre: {{song.genre}}</p>
-            <p *ngIf='song.submittedBy' class="submittedBy">Submitted By: {{song.submittedBy}}</p>
-            <p *ngIf='song.submittedOn' class="submittedOn">Submitted On: {{song.submittedOn}}</p>
-            <p *ngIf='info[1].numReviews' class="numRatings">Number of Ratings: {{info[1].numReviews}}</p>
-            <p *ngIf='info[1].aveRating' class="averageRating">Average Rating: {{info[1].aveRating}}</p>
-            
-            <p *ngIf='info[0].rating'>Rating: {{info[0].rating}}</p>
-            <p *ngIf='info[0].review'>Review: {{info[0].review}}</p>
-            <p *ngIf='info[0].submittedBy'>Submitted By: {{info[0].submittedBy}}</p>
-            <p *ngIf='info[0].submittedOn'>Submitted On: {{info[0].submittedOn}}</p>
-        </div>
-    </li>
-</ul>
+    <ul *ngFor="let song of results; let i = index;">
+        
+        <li *ngIf='!song.hidden'>
+            <p *ngIf='!song.hidden' class="title">Title: {{song.title}}</p>
+            <p *ngIf='!song.hidden' class="numRatings">Number of Reviews: {{song.numRatings}}</p>
+            <button *ngIf='!song.hidden' class="btn btn-info" (click)='toggleShow(song.title, i)'>Song Info</button>
+            <div *ngIf= showArr[i]&&!song.hidden>
+                <h4>Details</h4>
+                <p *ngIf='song.artist'>Artist: {{song.artist}}</p>
+                <p *ngIf='song.album' class="album">Album: {{song.album}}</p>
+                <p *ngIf='song.year' class="year">Year: {{song.year}}</p>
+                <p *ngIf='song.comment' class="comment">Comment: {{song.comment}}</p>
+                <p *ngIf='song.header' class="header">Header: {{song.header}}</p>
+                <p *ngIf='song.zeroByte' class="zeroByte">ZeroByte: {{song.zeroByte}}</p>
+                <p *ngIf='song.track' class="track">Track: {{song.track}}</p>
+                <p *ngIf='song.genre' class="genre">Genre: {{song.genre}}</p>
+                <p *ngIf='song.submittedBy' class="submittedBy">Submitted By: {{song.submittedBy}}</p>
+                <p *ngIf='song.submittedOn' class="submittedOn">Submitted On: {{song.submittedOn}}</p>
+                <p *ngIf='info[i][1].numReviews' class="numRatings">Number of Ratings: {{info[i][1].numReviews}}</p>
+                <p *ngIf='info[i][1].aveRating' class="averageRating">Average Rating: {{info[i][1].aveRating}}</p>
+                
+                <p *ngIf='info[i][0].rating'>Rating: {{info[i][0].rating}}</p>
+                <p *ngIf='info[i][0].review'>Review: {{info[i][0].review}}</p>
+                <p *ngIf='info[i][0].submittedBy'>Submitted By: {{info[i][0].submittedBy}}</p>
+                <p *ngIf='info[i][0].submittedOn'>Submitted On: {{info[i][0].submittedOn}}</p>
+            </div>
+            <button *ngIf='!song.hidden' (click)='getReviews(song.title, i)'>Reviews</button>
+            <div *ngIf=reviews[i]>
+                <h4>Reviews</h4>
+                <ul *ngFor="let rev of reviews[i]">
+                    <li>
+                        <p>Rating: {{rev.rating}}</p>
+                        <p *ngIf=rev.review>Review: {{rev.review}}</p>
+                        <p>Submitted By: {{rev.submittedBy}}</p>
+                        <p>Submitted On: {{rev.submittedOn}}</p>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
 

@@ -16,20 +16,24 @@ export class HttpService {
     return this.http.get('http://localhost:8081/public/songs');
   }
 
-  authenticate(user:User){
-    return this.http.post<any>('http://localhost:8081/public/validate', user);
-  }
-
-  newUser(user:User){
-    return this.http.put<any>('http://localhost:8081/public/new', user);
-  }
-
   search(keyword:Keyword){
     return this.http.get<any>('http://localhost:8081/public/search/'+keyword.word);
   }
 
   getInfo(title:string){
     return this.http.get<any>('http://localhost:8081/public/songReviewInfo/'+title);
+  }
+
+  getReviews(title:string){
+    return this.http.get<any>('http://localhost:8081/public/reviews/'+title);
+  }
+
+  authenticate(user:User){
+    return this.http.post<any>('http://localhost:8081/public/validate', user);
+  }
+
+  newUser(user:User){
+    return this.http.put<any>('http://localhost:8081/public/new', user);
   }
 
   newSong(song:Song){
@@ -61,4 +65,5 @@ export class HttpService {
   getPolicy(){
     return this.http.get<any>('http://localhost:8081/public/getPolicy');
   }
+
 }

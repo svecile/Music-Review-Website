@@ -4,7 +4,7 @@ const User = require('../models/user.model');
 const PrivacyPolicy=require('../models/privacy.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const secret = 'hello'; //process.env.JWT_KEY;
+const secret = process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 
 exports.new_user = function (req, res) {
@@ -109,7 +109,7 @@ exports.validate_user = function (req, res) {
 };
 //returns array of 10 songs ordered by average rating
 exports.home_songs = function (req, res) {
-    Song.find({}, ['title', 'artist', 'album', 'numRatings'],
+    Song.find({}, ['title', 'artist', 'album', 'numRatings', 'hidden'],
         { sort: { numRatings: -1 }, limit: 10 }, function (err, songs) {
 
             if (err) return console.error(err);
@@ -135,9 +135,10 @@ exports.search_songs = function (req, res) {
 //get all reviews for a song
 exports.all_song_reviews = function (req, res) {
     Review.find({ song: req.params.songName }, function (err, reviews) { //get all reviews for a song
-        if (err) return console.error(err);
-
-        res.send(JSON.stringify(reviews));
+        if (err){
+            return console.error(err);
+        } 
+        res.json(reviews);
     });
 };
 

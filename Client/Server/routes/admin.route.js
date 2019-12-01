@@ -1,7 +1,7 @@
 const express = require('express');
 const aRouter = express.Router();
 const admin_controller = require('../controllers/admin.controller');
-const secret = 'hello'; //process.env.JWT_KEY;
+const secret = process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 
 validate_token = function (req, res, next) {

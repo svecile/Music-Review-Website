@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
   availableItems: Object;
   topSongs: Object;
   results: Object;
-  info=new Object();
+  info:Object[]=[];
+  reviews:Object[]=[];
   keywordModel = new Keyword('');
   showArr: boolean[]=[];
 
@@ -34,9 +35,13 @@ export class HomeComponent implements OnInit {
 
   toggleShow(title:string, i:string){
     this._http.getInfo(title).subscribe(data=>{
-      this.info = data;
-      
+      this.info[parseInt(i)] = data;
       this.showArr[parseInt(i)] = true;
+    });
+  }
+  getReviews(title:string, i:string){
+    this._http.getReviews(title).subscribe(data => {
+      this.reviews[parseInt(i)] = data;
     });
   }
 }
