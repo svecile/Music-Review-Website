@@ -13,23 +13,23 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   homeSongs(){
-    return this.http.get('http://localhost:8081/open/songs');
+    return this.http.get('http://localhost:8081/public/songs');
   }
 
   authenticate(user:User){
-    return this.http.post<any>('http://localhost:8081/open/validate', user);
+    return this.http.post<any>('http://localhost:8081/public/validate', user);
   }
 
   newUser(user:User){
-    return this.http.put<any>('http://localhost:8081/open/new', user);
+    return this.http.put<any>('http://localhost:8081/public/new', user);
   }
 
   search(keyword:Keyword){
-    return this.http.get<any>('http://localhost:8081/open/search/'+keyword.word);
+    return this.http.get<any>('http://localhost:8081/public/search/'+keyword.word);
   }
 
   getInfo(title:string){
-    return this.http.get<any>('http://localhost:8081/open/songReviewInfo/'+title);
+    return this.http.get<any>('http://localhost:8081/public/songReviewInfo/'+title);
   }
 
   newSong(song:Song){
@@ -59,6 +59,6 @@ export class HttpService {
   }
 
   getPolicy(){
-    return this.http.get<any>('http://localhost:8081/open/getPolicy');
+    return this.http.get<any>('http://localhost:8081/public/getPolicy');
   }
 }

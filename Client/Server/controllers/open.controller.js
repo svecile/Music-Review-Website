@@ -8,7 +8,19 @@ const secret = 'hello'; //process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 
 exports.new_user = function (req, res) {
-    let email = req.body.email; //user info from body
+    let email = req.body.email;
+
+    if(email==""){
+        res.json(JSON.stringify('Error you need to enter an email!'));
+        return;
+    }else if(req.body.password==""){
+        res.json(JSON.stringify('Error you need to enter a password!'));
+        return;
+    }else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+        res.json(JSON.stringify('Error email address is invalid please enter a valid email'));
+        return;
+    }
+    
     console.log(`Creating user ${email}`);
     User.findOne({ email: req.body.email }, function (err, results) {
         if (results) {
@@ -42,6 +54,19 @@ exports.new_user = function (req, res) {
 };
 
 exports.validate_user = function (req, res) {
+
+    let email = req.body.email;
+
+    if(email==""){
+        res.json(JSON.stringify('Error you need to enter an email!'));
+        return;
+    }else if(req.body.password==""){
+        res.json(JSON.stringify('Error you need to enter a password!'));
+        return;
+    }else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+        res.json(JSON.stringify('Error email address is invalid please enter a valid email'));
+        return;
+    }
 
     console.log(`Validating user ${req.body.email}`);
 

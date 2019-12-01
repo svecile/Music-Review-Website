@@ -38,7 +38,6 @@ aRouter.use(validate_token); //validate token everytime
 aRouter.post('/makeAdmin', admin_controller.set_admin);
 aRouter.post('/updateSongFlag', admin_controller.set_hidden_flag);
 aRouter.post('/updateUserActivity', admin_controller.set_user_activity);
-//admin
 aRouter.post('/copyright/:id'); //Set or update copyright violation attributes for a given song ID. JSON array with new values is provided in the body
 aRouter.get('/copyright'); //Return all songs which are marked as copyright violations
 aRouter.post('/deactivate/:id'); //Set or clear “account deactivated” flag for a given user

@@ -26,7 +26,7 @@ const aRouter = require('./routes/admin.route');
 oRouter.use(express.json());
 uRouter.use(express.json());
 aRouter.use(express.json());
-app.use('/open', oRouter);
+app.use('/public', oRouter);
 app.use('/user', uRouter);
 app.use('/admin', aRouter);
 

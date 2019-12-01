@@ -10,8 +10,9 @@ import { Validators, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  userModel = new User(null, null, null, null);
-
+  userModel = new User("", "", null, null);
+  newUserModel = new User("", "", null, null);
+  
   email= new FormControl('',[
     Validators.required,
     Validators.email
@@ -37,6 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   newUser(){
-    this._http.newUser(this.userModel).subscribe(data=>alert(data));
+    this._http.newUser(this.newUserModel).subscribe(data=>alert(data));
   }
 }
