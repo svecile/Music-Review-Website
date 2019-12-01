@@ -24,12 +24,15 @@ app.use(logger('dev'));
 const oRouter = require('./routes/open.route');
 const uRouter = require('./routes/user.route');
 const aRouter = require('./routes/admin.route');
+const pRouter = require('./routes/policy.route')
 oRouter.use(express.json());
 uRouter.use(express.json());
 aRouter.use(express.json());
+pRouter.use(express.json());
 app.use('/api/public', oRouter);
 app.use('/api/user', uRouter);
 app.use('/api/admin', aRouter);
+app.use('/api/policy', pRouter);
 
 
 const port = 8081; //get port from enviroment or use 8080

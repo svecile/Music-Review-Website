@@ -6,6 +6,7 @@ import {Keyword} from './keyword'
 import { Review } from './review';
 import { Policy } from './policy';
 import { Record } from './record';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -64,7 +65,7 @@ export class HttpService {
   }
 
   getpPolicy(){
-    return this.http.get<any>('/api/public/getpPolicy');
+    return this.http.get<any>('/api/policy/getpPolicy');
   }
   newPolicy(policy:Policy){
     return this.http.put<any>('/api/admin/newPolicy', policy);
@@ -75,7 +76,7 @@ export class HttpService {
   }
 
   getPolicy(){
-    return this.http.get<any>('/api/public/getPolicy');
+    return this.http.get<any>('/api/policy/getPolicy');
   }
 
   createRecord(record:Record){

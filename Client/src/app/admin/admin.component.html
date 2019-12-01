@@ -8,6 +8,28 @@
     <button class="btn btn-primary">Update</button>
 </form>
 
+<h3>Create Record</h3>
+<form #recordForm="ngForm" (ngSubmit)="createRecord()" novalidate>
+    
+    <div class="form-group">
+        <label for="song">Song Name </label>
+        <input name="song" type="text" maxlength="30" class="form-control" [(ngModel)]="recordModel.song">
+    </div>
+    <div>
+        <label for="type">Record Type </label>
+        <select name="type" type ="text" class="form-control" [(ngModel)]="recordModel.type">
+                <option value="Takedown Request">Takedown Request</option>
+                <option value="Infringement Notice">Infringement Notice</option>
+                <option value="Dispute Claim">Dispute Claim</option>
+        </select>
+    </div>
+    <div class="form-group">
+            <label for="info">Notice/Request/Dispute </label>
+            <input name="info" type="text" class="form-control" [(ngModel)]="recordModel.info">
+        </div>
+    <button class="btn btn-primary">Save</button>
+</form>
+
 <h3>Set Song Hidden Flag</h3>
 <form #songHiddenForm="ngForm" (ngSubmit)="setHidden()" novalidate>
     
@@ -102,24 +124,3 @@
     <button class="btn btn-primary">Update</button>
 </form>
 
-<h3>Create Record</h3>
-<form #recordForm="ngForm" (ngSubmit)="createRecord()" novalidate>
-    
-    <div class="form-group">
-        <label for="song">Song Name </label>
-        <input name="song" type="text" maxlength="30" class="form-control" [(ngModel)]="recordModel.song">
-    </div>
-    <div>
-        <label for="type">Record Type </label>
-        <select name="type" type ="text" class="form-control" [(ngModel)]="recordModel.type">
-                <option value="Takedown Request">Takedown Request</option>
-                <option value="Infringement Notice">Infringement Notice</option>
-                <option value="Dispute Claim">Dispute Claim</option>
-        </select>
-    </div>
-    <div class="form-group">
-            <label for="info">Notice/Request/Dispute </label>
-            <input name="info" type="text" class="form-control" [(ngModel)]="recordModel.info">
-        </div>
-    <button class="btn btn-primary">Save</button>
-</form>
