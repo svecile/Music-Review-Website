@@ -12,6 +12,9 @@
     </div>
     <button class="btn btn-primary">Login</button>
 </form>
+<div *ngIf= email2>
+        <li *ngFor="let item of email2">{{item}}</li>
+</div>
 <br>
 <button class="btn btn-primary" (click)='showCreate()'>Create New Account</button>
 <div *ngIf='show'>
@@ -28,4 +31,7 @@
         </div>
         <button class="btn btn-primary">Create Account</button>
     </form>
+</div>
+<div *ngIf= email1>
+    <li *ngFor="let item of email1">{{item}}</li>
 </div>
