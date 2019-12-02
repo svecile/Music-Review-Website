@@ -3,7 +3,8 @@ const app = express();//create app using express
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors=require('cors');
-var logger = require('morgan');
+const logger = require('morgan');
+const expAutoSan = require('express-autosanitizer.js');
 
 const uri = "mongodb+srv://svecile:hello12345@lab3-crop3.mongodb.net/lab5?retryWrites=true&w=majority";
 
@@ -16,6 +17,7 @@ console.log('connected to the database (mongoose)');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(expAutoSan.allUnsafe); //sanitizes user input on all routes so it cant be interperted as html or javascript
 app.use(cors());
 app.use('/api/', function (req, res, next) {next()})
 app.use(logger('dev'));
