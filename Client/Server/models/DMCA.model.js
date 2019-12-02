@@ -3,17 +3,17 @@ const Schema = mongoose.Schema;
 
 //structure for each db record
 let DMCASchema = new Schema({
-    name: {type: String, required: true},
-    policy: {type: String, required: true},
-    submittedOn: {type: Date, default:Date.now}
-}, {collection:'DMCAPolicy', versionKey: false}
+    name: { type: String, required: true },
+    policy: { type: String, required: true },
+    submittedOn: { type: Date, default: Date.now }
+}, { collection: 'DMCAPolicy', versionKey: false }
 );
 
 // Sets the submitted on parameter equal to the current time
-DMCASchema.pre('save', function(next){
+DMCASchema.pre('save', function (next) {
     now = new Date();
     this.submittedOn = now;
-    if(!this.submittedOn) {
+    if (!this.submittedOn) {
         this.submittedOn = now
     }
     next();

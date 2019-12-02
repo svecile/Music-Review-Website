@@ -7,7 +7,17 @@
     </div>
     <button class="btn btn-primary">Update</button>
 </form>
-
+<h2>DMCA Takedown Procedure</h2>
+<p>
+    Once a coppyright claim has been received use the create record functionality to specify the name of the song and 
+    they type of record it is (Takedown Request), then put the claim in the text portion and click submit (the date will automaticallly be added).
+    Next set the song to hidden by inputing the song name and artist name and inform the contributor by email of the claim and the coppyright holder if possible.
+    Again use the create record functionality to create a record of the infringement notice being sent. 
+    If the user is a repeat offender disable their account using the disable account functionality. 
+    If a dispute claim is received use the create record function to record the dispute claim and email the claimant.
+    If the claimant doesnt take legal action within 14 days remove the hidden flag from the song using the set hidden flag function. 
+    If the users account was disabled, use the set activity functionality to reenable their account.
+</p>
 <h3>Create Record</h3>
 <form #recordForm="ngForm" (ngSubmit)="createRecord()" novalidate>
     
@@ -24,10 +34,10 @@
         </select>
     </div>
     <div class="form-group">
-            <label for="info">Notice/Request/Dispute </label>
+            <label for="info">Notice/Request/Dispute Text</label>
             <input name="info" type="text" class="form-control" [(ngModel)]="recordModel.info">
         </div>
-    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary">Submit</button>
 </form>
 
 <h3>Set Song Hidden Flag</h3>

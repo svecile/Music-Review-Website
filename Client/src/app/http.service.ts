@@ -14,6 +14,8 @@ export class HttpService {
 
   constructor(private http: HttpClient) {}
 
+  //routing requests to backend
+
   homeSongs(){
     return this.http.get('/api/public/songs');
   }

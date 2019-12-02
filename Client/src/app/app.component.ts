@@ -10,6 +10,7 @@ export class AppComponent implements OnInit{
   adminBanner:string;
 
   ngOnInit(): void {
+    //if it is an admin logged in display the banner
     this.adminBanner= localStorage.getItem('admin');
   }
 

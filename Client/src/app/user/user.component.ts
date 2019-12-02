@@ -18,11 +18,13 @@ export class UserComponent implements OnInit {
   songModel = new Song( null, null, null, null, null, null, null, null, null, null, null, null, null, null);
   reviewModel = new Review(null, null, null, null);
 
+  //add a new song
   newSong(){
     this.songModel.submittedBy= localStorage.getItem('email');
     this._http.newSong(this.songModel).subscribe(data=>alert(data));
   }
 
+  //add a new review
   newReview(){
     this.reviewModel.submittedBy= localStorage.getItem('email');
     this._http.newReview(this.reviewModel).subscribe(data=>alert(data));

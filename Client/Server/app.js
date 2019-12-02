@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors=require('cors');
 const logger = require('morgan');
-const expAutoSan = require('express-autosanitizer.js');
+const expAutoSan = require('express-autosanitizer');
+const port = process.env.PORT;
 
 const uri = "mongodb+srv://svecile:hello12345@lab3-crop3.mongodb.net/lab5?retryWrites=true&w=majority";
 
@@ -22,7 +23,7 @@ app.use(cors());
 app.use('/api/', function (req, res, next) {next()})
 app.use(logger('dev'));
 
-//import routes
+//import routes, routes are all seperate so sme can require validation
 const oRouter = require('./routes/open.route');
 const uRouter = require('./routes/user.route');
 const aRouter = require('./routes/admin.route');
@@ -35,8 +36,5 @@ app.use('/api/public', oRouter);
 app.use('/api/user', uRouter);
 app.use('/api/admin', aRouter);
 app.use('/api/policy', pRouter);
-
-
-const port = 8081; //get port from enviroment or use 8080
 
 app.listen(port, () => {console.log(`Server is up and running on port number ${port}...`);});

@@ -4,10 +4,10 @@ const admin_controller = require('../controllers/admin.controller');
 const secret = process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 
+//validate admin token that is attached to incoming request
 validate_token = function (req, res, next) {
-    console.log('Data: ' + JSON.stringify(req.body));
-    console.log("Auth: " + req.headers.authorization);
 
+    //make sure there is an auth header
     if (typeof req.headers.authorization === 'undefined') {
         return res.send(JSON.stringify("Access denied. Missing Auth header."));
     }
@@ -22,6 +22,7 @@ validate_token = function (req, res, next) {
         //check if token is an admin token
         if (payload.admin) {
             console.log("JWT: ", JSON.stringify(payload));
+            //if it is continue to the next function
             next();
         }
         else {
@@ -35,16 +36,13 @@ validate_token = function (req, res, next) {
 
 aRouter.use(validate_token); //validate token everytime 
 
-aRouter.post('/makeAdmin', admin_controller.set_admin);
-aRouter.post('/updateSongFlag', admin_controller.set_hidden_flag);
-aRouter.post('/updateUserActivity', admin_controller.set_user_activity);
-aRouter.post('/copyright/:id'); //Set or update copyright violation attributes for a given song ID. JSON array with new values is provided in the body
-aRouter.get('/copyright'); //Return all songs which are marked as copyright violations
-aRouter.post('/deactivate/:id'); //Set or clear “account deactivated” flag for a given user
-aRouter.put('/newPPolicy', admin_controller.pPolicy_create); //create new policy
-aRouter.post('/updatePPolicy', admin_controller.update_pPolicy); //update policy
-aRouter.put('/newPolicy', admin_controller.policy_create); //create new policy
-aRouter.post('/updatePolicy', admin_controller.update_policy); //update policy
-aRouter.put('/newRecord', admin_controller.new_record);//create a new infringement notice/takedown request/dispute claim
+aRouter.post('/makeAdmin', admin_controller.set_admin);//make a user an admin
+aRouter.post('/updateSongFlag', admin_controller.set_hidden_flag);//make a song hidden or visible
+aRouter.post('/updateUserActivity', admin_controller.set_user_activity);//activate or deactivate a user account
+aRouter.put('/newPPolicy', admin_controller.pPolicy_create); //create new privacy policy
+aRouter.post('/updatePPolicy', admin_controller.update_pPolicy); //update pricavy policy
+aRouter.put('/newPolicy', admin_controller.policy_create); //create new DMCA policy
+aRouter.post('/updatePolicy', admin_controller.update_policy); //update DMCA policy
+aRouter.put('/newRecord', admin_controller.new_record);//create a new infringement notice/takedown request/dispute claim record
 
 module.exports = aRouter;

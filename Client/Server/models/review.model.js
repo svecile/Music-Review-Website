@@ -21,5 +21,4 @@ ReviewSchema.pre('save', function (next) {
     next();
 });
 
-// create and export a js object with schema snd database instance
 module.exports = mongoose.model('Review', ReviewSchema);

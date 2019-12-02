@@ -12,6 +12,7 @@ export class PrivacyComponent implements OnInit {
 
   policy: Object;
 
+  //display privacy policy
   ngOnInit() {
     this._http.getpPolicy().subscribe(data => {
       console.log(data)

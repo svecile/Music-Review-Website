@@ -31,6 +31,7 @@ import { DMCAComponent } from './dmca/dmca.component';
     FormsModule
   ],
   providers: [
+    //create an http interceptor to attach token to header
     {provide: HTTP_INTERCEPTORS, useClass:AuthService, multi:true},
   ],
   bootstrap: [AppComponent]

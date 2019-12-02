@@ -7,6 +7,7 @@ const Record = require('../models/record.model');
 //make a user an admin
 exports.set_admin = function (req, res) {
     User.updateOne({ email: req.body.word }, { admin: true }, function (err, results) {
+        //user is not found
         if (results == null) {
             res.send(JSON.stringify(`cannot find ${req.body.word} usr account`));
             console.log('User doesnt exist');
@@ -19,6 +20,7 @@ exports.set_admin = function (req, res) {
     });
 };
 
+//Set hidden flag on song that is being contested for coppyright violation
 exports.set_hidden_flag = function (req, res) {
 
     Song.update({ title: req.body.title, artist: req.body.artist }, { hidden: req.body.hidden }, function (err, results) {
@@ -38,7 +40,7 @@ exports.set_hidden_flag = function (req, res) {
 exports.set_user_activity = function (req, res) {
     User.updateOne({ email: req.body.email }, { deactivated: req.body.deactivated }, function (err, results) {
         if (results == null) {
-            res.status(401).send(` ${req.body.email} user doesnt exist`);
+            res.send(JSON.stringify('user doesnt exist'));
             console.log('User doesnt exist');
 
         } else if (err) {
@@ -48,8 +50,9 @@ exports.set_user_activity = function (req, res) {
     });
 };
 
-//create privacy policy
+//create a new privacy policy
 exports.pPolicy_create = function (req, res) {
+    //create policy object
     let policy = new PrivacyPolicy(
         {
             name: req.body.name,
@@ -57,7 +60,7 @@ exports.pPolicy_create = function (req, res) {
         }
     );
 
-    //save data to database
+    //save object to database
     policy.save(function (err) {
         if (err) {
             res.send(JSON.stringify('Error policy and name must be entered!'))
@@ -69,7 +72,7 @@ exports.pPolicy_create = function (req, res) {
     });
 };
 
-//update privacy policy
+//update an existing privacy policy
 exports.update_pPolicy = function (req, res) {
     PrivacyPolicy.update({ name: req.body.name }, { policy: req.body.policy }, function (err) {
         if (err) console.log(err);
@@ -100,7 +103,7 @@ exports.policy_create = function (req, res) {
     });
 };
 
-//update DMCA policy
+//update existing DMCA policy
 exports.update_policy = function (req, res) {
     DMCAPolicy.update({ name: req.body.name }, { policy: req.body.policy }, function (err) {
         if (err) console.log(err);
@@ -110,6 +113,7 @@ exports.update_policy = function (req, res) {
     });
 };
 
+//create a new infringement notice/takedown request/dispute claim record
 exports.new_record = function (req, res) {
     let record = new Record(
         {

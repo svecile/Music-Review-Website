@@ -4,7 +4,7 @@ const Review = require('../models/review.model');
 //create new song using data coming from a Put request
 exports.song_create = function (req, res) {
     //make sure title and artist feilds are entered
-    if(req.body.title=="" || req.body.artist==""){
+    if (req.body.title == "" || req.body.artist == "") {
         res.send(JSON.stringify('Error title and artist feilds are required!'));
         return;
     }
@@ -20,8 +20,8 @@ exports.song_create = function (req, res) {
             track: req.body.track,
             genre: req.body.genre,
             submittedBy: req.body.submittedBy,
-            numRatings:0,
-            averageRating:0,
+            numRatings: 0,
+            averageRating: 0,
             hidden: false
         }
     );
@@ -52,17 +52,18 @@ exports.review_create = function (req, res) {
         if (err) {
             res.send(JSON.stringify('Error rating and song name must be entered!'))
             return console.error(err);
-        }else{
+        } else {
             console.log('Review Created Sucessfully');
             res.send(JSON.stringify('Review created sucessfullty'));
         }
     });
 
-    Song.update({ title: req.body.song }, { $inc: { numRatings: 1 }}, function (err) {
+    //update the number of ratings for the cooresponding song
+    Song.update({ title: req.body.song }, { $inc: { numRatings: 1 } }, function (err) {
         if (err) {
             res.send(JSON.stringify('Error song not found!'))
             return console.error(err);
-        }   
+        }
     });
 };
 
@@ -71,13 +72,12 @@ exports.update_song = function (req, res) {
     const entries = Object.keys(req.body);
     const updates = {};
 
-    // constructing dynamic query
-
+    // constructing dynamic query so any values can be updated
     for (let i = 0; i < entries.length; i++) {
         updates[entries[i]] = Object.values(req.body)[i];
     }
-    Song.update({title: req.body.title}, { $set: updates }, function (err) {
+    Song.update({ title: req.body.title }, { $set: updates }, function (err) {
         if (err) throw (err);
-        console.log("update sucessful");
+        res.send(JSON.stringify("update sucessful"));
     });
 };

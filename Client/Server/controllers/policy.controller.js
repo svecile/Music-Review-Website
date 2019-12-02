@@ -1,4 +1,4 @@
-const PrivacyPolicy=require('../models/privacy.model');
+const PrivacyPolicy = require('../models/privacy.model');
 const DMCAPolicy = require('../models/DMCA.model');
 
 //get the most recent privacy policy for display
