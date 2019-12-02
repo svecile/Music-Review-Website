@@ -43,7 +43,9 @@ exports.new_user = function (req, res) {
                     {
                         email: req.body.email,
                         password: hash,
-                        admin: false
+                        admin: false,
+                        isVerified: false,
+                        deactivated:false
                     }
                 );
 
@@ -65,7 +67,7 @@ exports.new_user = function (req, res) {
                         //create email for verification
                         var email = [
                             "From: no-reply@musicshareing.com", "To: " + user.email, "Subject: Account Verification Token",
-                            "Body: Please verify your account by clicking the link: http://localhost:8081/api/public/confirmation/" + token.token
+                            "Body: Please verify your account by pasting the link into your browser: http://localhost:8081/api/public/confirmation/" + token.token
                         ]
                         res.send(email);
                     });
@@ -119,7 +121,7 @@ exports.validate_user = function (req, res) {
             res.send(JSON.stringify(`Access denied for ${req.body.email}, user does not exist`));
 
         } else if (results.deactivated == true) {//if account is deactivated
-            res.send(JSON.stringify(`Access denied for ${req.body.email}, user account deactivated, please contact site admin at admin@gmail.com`));
+            res.send(JSON.stringify(`Access denied for ${req.body.email}, user account deactivated, please contact site admin at svecile@uwo.ca`));
             console.log('User account deactivated');
 
         } else if (!results.isVerified) {//if the email hasnt been verified yet give them another chance to verify
