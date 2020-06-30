@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-autosanitizer": "^1.0.1",
-    "express-jwt": "^5.3.1",
+    "express-jwt": "^6.0.0",
     "fuse.js": "^3.4.6",
     "mongodb": "^3.3.4",
     "mongoose": "^5.7.11",
